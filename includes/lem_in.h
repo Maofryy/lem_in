@@ -58,6 +58,7 @@ typedef struct      s_env
 */
 int     ft_parse_stdin(t_env *e);
 int     ft_parse_room(char *line, t_parser *p);
+int     ft_malloc_room(t_parser *p, int ret);
 
 /*
 ** Exit

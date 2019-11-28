@@ -2,20 +2,30 @@
 
 void    ft_init_parser(t_parser *p)
 {
-    p->nb_ants = 0;
-    p->nb_rooms = 0;
+    p->nb_ants = -1;
+    p->nb_rooms = -1;
     p->cursor_rooms = 0;
-    p->nb_tubes = 0;
+    p->nb_tubes = -1;
     p->cursor_tubes = 0;
     p->start_flag = 0;
     p->end_flag = 0;
 }
 
-int    ft_parse_nb(char *line, long *nb)
+int    ft_parse_long(char *line, long *nb)
 {
     if (!ft_isnum(line))
         ft_error("Error : non numeric number passed");
     *nb = ft_atol(line);
+    if (*nb < 0)
+        ft_error("Error : negative number");
+    return (1);
+}
+
+int    ft_parse_int(char *line, int *nb)
+{
+    if (!ft_isnum(line))
+        ft_error("Error : non numeric number passed");
+    *nb = ft_atoi(line);
     if (*nb < 0)
         ft_error("Error : negative number");
     return (1);
@@ -38,6 +48,8 @@ int    ft_read_comment(char *line, t_parser *p)
     return (1);
 }
 
+
+
 int     ft_parse_line(char *line, t_parser *p)
 {
     int ret;
@@ -45,10 +57,18 @@ int     ft_parse_line(char *line, t_parser *p)
     ret = 0;
     if (line[0] == '#')
         return (ft_read_comment(line + 1, p));
-    if (p->nb_ants == 0)
-        return (ft_parse_nb(line, &p->nb_ants));
+    if (p->nb_ants == -1)
+        return (ft_parse_long(line, &p->nb_ants));
+    else if (p->nb_rooms == -1)
+        return (ft_parse_int(line, &p->nb_rooms));
+    else if (p->nb_tubes == -1)
+        return (ft_malloc_room(p, ft_parse_int(line, &p->nb_tubes)));
     else if (p->cursor_rooms <= p->nb_rooms)
         return (ft_parse_room(line, p));
+    else
+    {
+        ft_printf("Parsing rooms finished");
+    }
     // else if (p->cursor_tubes <= p->nb_tubes)
     //     ft_parse_tube(line, p);
     return (ret);
@@ -61,6 +81,7 @@ void    ft_paste_parser(t_parser *p, t_env *e)
     e->nb_tubes = p->nb_tubes;
     e->start_room = p->start_room;
     e->end_room = p->end_room;
+    //Remove these dups later
     e->start_room = ft_strdup("Start");
     e->end_room = ft_strdup("End");
 }
