@@ -63,14 +63,10 @@ int     ft_parse_line(char *line, t_parser *p)
         return (ft_parse_int(line, &p->nb_rooms));
     else if (p->nb_tubes == -1)
         return (ft_malloc_room(p, ft_parse_int(line, &p->nb_tubes)));
-    else if (p->cursor_rooms <= p->nb_rooms)
+    else if (p->cursor_rooms < p->nb_rooms)
         return (ft_parse_room(line, p));
-    else
-    {
-        ft_printf("Parsing rooms finished");
-    }
-    // else if (p->cursor_tubes <= p->nb_tubes)
-    //     ft_parse_tube(line, p);
+    else if (p->cursor_tubes <= p->nb_tubes)
+        return (ft_parse_tube(line, p));
     return (ret);
 }
 

@@ -25,6 +25,8 @@ int main(int ac, char **av)
         ft_print_usage(1);
     ft_init_env(&e);
     ft_parse_stdin(&e);
+    ft_printf("---------------Parsing finished----------------\n");
+    //check if cursors really correspond to the numbers provided, maybe other types of user error ?
     ft_printf("nb ants = %d\n", e.nb_ants);
     ft_printf("nb rooms = %d\n", e.nb_rooms);
     ft_printf("nb tubes = %d\n", e.nb_tubes);

@@ -30,8 +30,8 @@ typedef struct      s_parser
     char    *start_room;
     int     end_flag;
     char    *end_room;
-    t_room  *room;
-    t_tube  *tube;
+    t_room  *rooms;
+    t_tube  *tubes;
 }                   t_parser;
 
 typedef struct      s_env
@@ -58,7 +58,9 @@ typedef struct      s_env
 */
 int     ft_parse_stdin(t_env *e);
 int     ft_parse_room(char *line, t_parser *p);
+int     ft_parse_tube(char *line, t_parser *p);
 int     ft_malloc_room(t_parser *p, int ret);
+int     ft_malloc_tube(t_parser *p, int ret);
 
 /*
 ** Exit
