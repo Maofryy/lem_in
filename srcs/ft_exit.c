@@ -1,6 +1,6 @@
 #include "lem_in.h"
 
-void	free_anything(void *arg1, ...)
+void	ft_free_anything(void *arg1, ...)
 {
     va_list args;
     void *vp;
@@ -10,6 +10,12 @@ void	free_anything(void *arg1, ...)
     while ((vp = va_arg(args, void *)) != 0)
         free(vp);
     va_end(args);
+}
+
+void	ft_exit(int flag)
+{
+	if (flag)
+		exit(EXIT_SUCCESS);
 }
 
 void	ft_ko(void)
@@ -24,9 +30,12 @@ void	ft_ok(void)
 	exit(EXIT_SUCCESS);
 }
 
-void	ft_error(void)
+void	ft_error(char *str)
 {
-	ft_dprintf(2, "Error\n");
+	if (str == NULL)
+		ft_dprintf(2, "ERROR\n");
+	else 
+		ft_dprintf(2, "%s\n", str);
 	exit(EXIT_SUCCESS);
 }
 
@@ -38,6 +47,17 @@ void	ft_print_usage(int flag)
 	ft_printf("\t-v : activate verbose mode\n");
 	ft_printf("\t-f [input_filemame] : read mine info from a well formated file\n");
 	ft_printf("\t-o [output_filemame] : prints to the file passed\n");
-	if (flag)
-		exit(EXIT_SUCCESS);
+	ft_exit(flag);
+
+}
+
+void ft_free_env(t_env *e, int flag)
+{
+	if (e->i_flag)
+		free(e->i_filename);
+	if (e->o_flag)
+		free(e->o_filename);
+	free(e->start_room);
+	free(e->end_room);
+	ft_exit(flag);
 }

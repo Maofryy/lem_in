@@ -32,7 +32,10 @@ LIB = $(LIB_PATH)/$(LIBFT)
 NAME = lem_in
 
 SRC_NAME = ft_lem_in.c \
-			ft_exit.c
+			ft_exit.c \
+			ft_options.c \
+			ft_parser.c \
+			ft_parse_objects.c
 			
 OBJ_NAME = $(SRC_NAME:.c=.o)
 
@@ -75,7 +78,7 @@ re : fclean all
 .SILENT : all $(NAME) clean fclean re run_clean
 
 run : all
-	sh srcs_test/tests.sh ${ARGS}
+	./$(NAME)
 
 norme:
 	norminette $(SRC)

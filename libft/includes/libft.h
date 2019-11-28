@@ -104,8 +104,10 @@ char			*ft_ulltoa_base(unsigned long long int n, int base);
 char			*ft_ulltoa_majbase(unsigned long long int n, int base);
 char			*ft_ulltoa(unsigned long long int n);
 void 			ft_reverse_str(char *str, int len);
-int       ft_min(int a, int b);
-int       ft_max(int a, int b);
-int	    	ft_abs(int n);
+int       		ft_min(int a, int b);
+int       		ft_max(int a, int b);
+int	    		ft_abs(int n);
+int				ft_isnum(char *str);
+size_t			count_words(char *str, char c);
 
 #endif

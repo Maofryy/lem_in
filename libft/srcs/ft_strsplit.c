@@ -19,7 +19,7 @@ static int		is_char(char c, char charset)
 	return (0);
 }
 
-static size_t	count_words(char *str, char c)
+size_t			count_words(char *str, char c)
 {
 	size_t	count;
 	int		i;
