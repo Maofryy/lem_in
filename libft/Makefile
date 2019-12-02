@@ -112,6 +112,7 @@ SRC_NAME = ft_atoi.c \
 	   ft_test.c \
 	   ft_wide.c \
 	   ft_isnum.c \
+	   ft_lst_utils.c \
 		 ft_min.c
 
 OBJ_NAME = $(SRC_NAME:.c=.o)

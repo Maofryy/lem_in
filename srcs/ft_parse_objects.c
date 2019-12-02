@@ -56,8 +56,10 @@ int    ft_parse_room(char *line, t_parser *p)
         p->start_room = ft_strdup(tab[0]);
         p->start_flag = 1;
     }
-    else if (p->end_flag == -1)
+    if (p->end_flag == -1)
     {
+        if (p->start_flag == -1)
+            ft_error("Error : start and end cannot be the same room\n");
         p->end_room = ft_strdup(tab[0]);
         p->end_flag = 1;
     }    

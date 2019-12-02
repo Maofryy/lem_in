@@ -109,5 +109,12 @@ int       		ft_max(int a, int b);
 int	    		ft_abs(int n);
 int				ft_isnum(char *str);
 size_t			count_words(char *str, char c);
+t_list *ft_list_new(int const data);
+void	ft_list_push_tail(t_list **s, int new_data);
+long int	ft_stack_pop_tail(t_list **s);
+void	ft_lst_push(t_list **s, int new_data);
+long int	ft_lst_pop(t_list **s);
+int	ft_list_size(t_list *s);
+void	ft_list_del(t_list **s);
 
 #endif

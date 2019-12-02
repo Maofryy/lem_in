@@ -85,18 +85,18 @@ void        ft_print_matrix(t_matrix mat)
     int n;
 
     n = -1;
-    ft_printf("   |");
+    ft_printf("___");
     while (mat.labels[++n])
-        ft_printf(" %s |", mat.labels[n]);
-    ft_printf("\n");
+        ft_printf("| %s ", mat.labels[n]);
+    ft_printf("|\n");
     i = -1;
     while (++i < n)
     {
         j = -1;
         ft_printf(" %s |", mat.labels[i]);
         while (++j < n)
-            ft_printf(" %d  ", mat.adj[i][j]);
-        ft_printf("|\n");
+            ft_printf(" %d |", mat.adj[i][j]);
+        ft_printf("\n");
     }
 }
 
