@@ -55,10 +55,6 @@ typedef struct      s_env
     //end options
 
     long        nb_ants;
-    int         nb_rooms;
-    int         nb_tubes;
-    char        *start_room;
-    char        *end_room;
     t_matrix    *mat;
 }                   t_env;
 
@@ -76,6 +72,7 @@ int     ft_malloc_tube(t_parser *p, int ret);
 ** Matrix
 */
 t_matrix    *ft_matrix_create(t_parser *p);
+void        ft_free_matrix(t_matrix *mat);
 
 /*
 ** Exit

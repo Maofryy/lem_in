@@ -1,7 +1,10 @@
 #include "lem_in.h"
 
-void    ft_init_parser(t_parser *p)
+t_parser    *ft_init_parser(void)
 {
+    t_parser *p;
+    
+    p = (t_parser *)malloc(sizeof(t_parser) * 1);
     p->nb_ants = -1;
     p->nb_rooms = -1;
     p->cursor_rooms = 0;
@@ -9,6 +12,32 @@ void    ft_init_parser(t_parser *p)
     p->cursor_tubes = 0;
     p->start_flag = 0;
     p->end_flag = 0;
+    return (p);
+}
+
+void    ft_free_parser(t_parser *p)
+{
+    int i;
+
+    if (p->start_flag)
+        free(p->start_room);
+    if (p->end_flag)
+        free(p->end_room);
+    i = -1;
+    while (++i < p->cursor_rooms)
+    {
+        free(p->rooms[i].label);
+    };
+    free(p->rooms);
+    i = -1;
+    while (++i < p->cursor_tubes)
+    {
+        free(p->tubes[i].label);
+        free(p->tubes[i].room_1);
+        free(p->tubes[i].room_2);
+    }
+    free(p->tubes);
+    free(p);
 }
 
 int    ft_parse_long(char *line, long *nb)
@@ -48,8 +77,6 @@ int    ft_read_comment(char *line, t_parser *p)
     return (1);
 }
 
-
-
 int     ft_parse_line(char *line, t_parser *p)
 {
     int ret;
@@ -75,14 +102,10 @@ void    ft_paste_parser(t_parser *p, t_env *e)
     e->nb_ants = p->nb_ants;
     if (p->cursor_rooms != p->nb_rooms)
         ft_error("Error : wrong number of rooms\n");
-    e->nb_rooms = p->nb_rooms;
     if (p->cursor_tubes != p->nb_tubes)
         ft_error("Error : wrong number of tubes\n");
-    e->nb_tubes = p->nb_tubes;
     if (p->start_flag != 1 || p->end_flag != 1)
         ft_error("Error : start or end not defined\n");
-    e->start_room = p->start_room;
-    e->end_room = p->end_room;
     e->mat = ft_matrix_create(p);
     // e->start_room = ft_strdup("Start");
     // e->end_room = ft_strdup("End");
@@ -91,11 +114,11 @@ void    ft_paste_parser(t_parser *p, t_env *e)
 int     ft_parse_stdin(t_env *e)
 {
   char  *line;
-  t_parser p;
+  t_parser *p;
   int   n;
 
   n = 0;
-  ft_init_parser(&p);
+  p = ft_init_parser();
   while (get_next_line(e->o_fd, &line) > 0)
   {
     if (ft_strlen(line) == 0 || line[0] == 'L')
@@ -103,7 +126,7 @@ int     ft_parse_stdin(t_env *e)
       free(line);
       break ;
     }
-    if (ft_parse_line(line, &p) == -1)
+    if (ft_parse_line(line, p) == -1)
     {
       free(line);
       ft_free_env(e, 1);
@@ -112,7 +135,8 @@ int     ft_parse_stdin(t_env *e)
     n++;
     free(line);
   }
-  ft_printf("start_flag : %d | end_flag : %d\n", p.start_flag, p.end_flag);
-  ft_paste_parser(&p, e);
+  ft_printf("start_flag : %d | end_flag : %d\n", p->start_flag, p->end_flag);
+  ft_paste_parser(p, e);
+  ft_free_parser(p);
   return (n);
 }

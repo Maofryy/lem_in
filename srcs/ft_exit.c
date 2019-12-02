@@ -57,7 +57,6 @@ void ft_free_env(t_env *e, int flag)
 		free(e->i_filename);
 	if (e->o_flag)
 		free(e->o_filename);
-	free(e->start_room);
-	free(e->end_room);
+	// ft_free_matrix(e->mat);
 	ft_exit(flag);
 }

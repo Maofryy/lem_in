@@ -61,7 +61,6 @@ void        ft_swap(t_matrix *mat, int to, char *label, int n)
     if (from == to)
         return ;
     tmp = (int *)malloc(sizeof(int) * n);
-    //Swap cols
     i = -1;
     while (++i < n)
     {
@@ -69,8 +68,6 @@ void        ft_swap(t_matrix *mat, int to, char *label, int n)
         mat->adj[i][to] = mat->adj[i][from];
         mat->adj[i][from] = tmp[i];
     }
-    //End of swap
-    //Swap lines
     i = -1;
     while (++i < n)
     {
@@ -78,7 +75,6 @@ void        ft_swap(t_matrix *mat, int to, char *label, int n)
         mat->adj[to][i] = mat->adj[from][i];
         mat->adj[from][i] = tmp[i];
     }
-    //End of swap
     ft_swap_labels(mat, to, from);
 }
 
@@ -100,8 +96,24 @@ void        ft_print_matrix(t_matrix mat)
         ft_printf(" %s |", mat.labels[i]);
         while (++j < n)
             ft_printf(" %d  ", mat.adj[i][j]);
-        ft_printf("\n");
+        ft_printf("|\n");
     }
+}
+
+void        ft_free_matrix(t_matrix *mat)
+{
+    int i;
+    int n;
+
+    n = -1;
+    while (mat->labels[++n])
+        free(mat->labels[n]);
+    free(mat->labels);
+    i = -1;
+    while (++i < n)
+        free(mat->adj[i]);
+    free(mat->adj);
+    free(mat);
 }
 
 t_matrix    *ft_matrix_create(t_parser *p)
