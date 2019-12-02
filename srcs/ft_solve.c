@@ -8,39 +8,40 @@ int parentsList[10];
 
 int currentPathCapacity[10]; 
 
-int bfs(int startNode, int endNode, )
+int bfs(int startNode, int endNode, t_matrix *mat)
 {
     memset(parentsList, -1, sizeof(parentsList));
     memset(currentPathCapacity, 0, sizeof(currentPathCapacity));
     t_list *q;
 
-    q = ft_lstnew(startNode, sizeof(int));
-    // PUSH ft_lstadd(&q, ft_lstnew(INT));
-    q.push(startNode);
+    q = ft_list_new(startNode);
+    // PUSH ft_list_push(&q, int);
 
     parentsList[startNode] = -2;
     currentPathCapacity[startNode] = 999;
 
-    while(!q.empty())
+    while(ft_list_size(q) != 0)
     {
-        int currentNode = q.front();
-        q.pop();
+        int i;
+        int currentNode = ft_list_pop(&q);
 
-        for(int i=0; i<graph[currentNode].size(); i++)
+        // for(int i=0; i < mat->adj[currentNode].size(); i++)
+        i = -1;
+        while (i < mat->size)
         {
-            int to = graph[currentNode][i];
+            int to = mat->adj[currentNode][i];
             if(parentsList[to] == -1)
             {
                 if(capacities[currentNode][to] - flowPassed[currentNode][to] > 0)
                 {
                     parentsList[to] = currentNode;
-                    currentPathCapacity[to] = min(currentPathCapacity[currentNode], 
+                    currentPathCapacity[to] = ft_min(currentPathCapacity[currentNode], 
                     capacities[currentNode][to] - flowPassed[currentNode][to]);
                     if(to == endNode)
                     {
                         return currentPathCapacity[endNode];
                     }
-                    q.push(to);
+                    ft_list_push(&q, to);
                 }
 
             }
@@ -50,12 +51,12 @@ int bfs(int startNode, int endNode, )
 }
 
 
-int edmondsKarp(int startNode, int endNode)
+int edmondsKarp(int startNode, int endNode, t_matrix *mat)
 {
     int maxFlow = 0;
       while(1)
     {
-        int flow = bfs(startNode, endNode);
+        int flow = bfs(startNode, endNode, mat);
         if (flow == 0) 
             break;
         maxFlow += flow;
@@ -71,10 +72,10 @@ int edmondsKarp(int startNode, int endNode)
     return maxFlow;
 }
 
-int     **ft_solve(t_matrix *mat)
+int     ft_solve(t_matrix *mat)
 {
-    int **path;
+    int flow;
 
-    path = ft_solve(mat);
-    return (path);
+    flow = edmondsKarp(0, mat->size - 1, mat);
+    return (flow);
 }

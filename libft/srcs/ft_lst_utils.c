@@ -49,7 +49,7 @@ long int	ft_stack_pop_tail(t_list **s)
 	return ((int)ret);
 }
 
-void	ft_lst_push(t_list **s, int new_data)
+void	ft_list_push(t_list **s, int new_data)
 {
 	t_list *new;
 
@@ -61,7 +61,7 @@ void	ft_lst_push(t_list **s, int new_data)
 	}
 }
 
-long int	ft_lst_pop(t_list **s)
+long int	ft_list_pop(t_list **s)
 {
 	int			ret;
 	t_list	*next;

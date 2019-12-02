@@ -26,14 +26,13 @@ t_matrix    *ft_init_matrix(t_parser *p)
     m = (t_matrix *)malloc(sizeof(t_matrix) * 1);
     m->adj = (int **)malloc(sizeof(int *) * (p->nb_rooms));
     m->labels = (char **)malloc(sizeof(char *) * (p->nb_rooms + 1));
+    m->size = p->nb_rooms;
     while (++i < p->nb_rooms)
     {
         j = -1;
         m->adj[i] = (int *)malloc(sizeof(int) * (p->nb_rooms));
         while (++j < p->nb_rooms)
-        {
             m->adj[i][j] = ft_is_adj(p, i ,j);
-        }
         m->labels[i] = ft_strdup(p->rooms[i].label);
     }
     m->labels[i] = 0;

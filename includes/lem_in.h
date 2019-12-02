@@ -9,6 +9,7 @@ typedef struct      s_matrix
 {
     int     **adj;
     char    **labels;
+    int     size;
 }                   t_matrix;
 
 typedef struct      s_room
@@ -67,12 +68,17 @@ int     ft_parse_tube(char *line, t_parser *p);
 int     ft_malloc_room(t_parser *p, int ret);
 int     ft_malloc_tube(t_parser *p, int ret);
 
+/*
+** Solve
+*/
+int     ft_solve(t_matrix *mat);
 
 /*
 ** Matrix
 */
 t_matrix    *ft_matrix_create(t_parser *p);
 void        ft_free_matrix(t_matrix *mat);
+void        ft_print_matrix(t_matrix mat);
 
 /*
 ** Exit
