@@ -18,7 +18,6 @@ int main(int ac, char **av)
 
     //Read options
     (void)av;
-    ft_printf("Hey\n");
     ft_init_env(&e);
     if (ac - e.ac_start >= 2)
         ft_print_usage(1);
