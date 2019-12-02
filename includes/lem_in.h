@@ -5,6 +5,12 @@
 # include "ft_printf.h"
 # include <fcntl.h>
 
+typedef struct      s_matrix
+{
+    int     **adj;
+    char    **labels;
+}                   t_matrix;
+
 typedef struct      s_room
 {
     char    *label;
@@ -36,6 +42,7 @@ typedef struct      s_parser
 
 typedef struct      s_env
 {
+    //options shit
     int     ac_start;
     int     o_flag;
     char    *o_filename;
@@ -45,12 +52,14 @@ typedef struct      s_env
     int     i_fd;
     int     v_flag;
     int     h_flag;
+    //end options
 
-    long     nb_ants;
-    int     nb_rooms;
-    int     nb_tubes;
-    char    *start_room;
-    char    *end_room;
+    long        nb_ants;
+    int         nb_rooms;
+    int         nb_tubes;
+    char        *start_room;
+    char        *end_room;
+    t_matrix    *mat;
 }                   t_env;
 
 /*
@@ -61,6 +70,12 @@ int     ft_parse_room(char *line, t_parser *p);
 int     ft_parse_tube(char *line, t_parser *p);
 int     ft_malloc_room(t_parser *p, int ret);
 int     ft_malloc_tube(t_parser *p, int ret);
+
+
+/*
+** Matrix
+*/
+t_matrix    *ft_matrix_create(t_parser *p);
 
 /*
 ** Exit

@@ -60,12 +60,12 @@ int     ft_parse_line(char *line, t_parser *p)
     if (p->nb_ants == -1)
         return (ft_parse_long(line, &p->nb_ants));
     else if (p->nb_rooms == -1)
-        return (ft_parse_int(line, &p->nb_rooms));
+        return (ft_malloc_room(p, ft_parse_int(line, &p->nb_rooms)));
     else if (p->nb_tubes == -1)
-        return (ft_malloc_room(p, ft_parse_int(line, &p->nb_tubes)));
+        return (ft_malloc_tube(p, ft_parse_int(line, &p->nb_tubes)));
     else if (p->cursor_rooms < p->nb_rooms)
         return (ft_parse_room(line, p));
-    else if (p->cursor_tubes <= p->nb_tubes)
+    else if (p->cursor_tubes < p->nb_tubes)
         return (ft_parse_tube(line, p));
     return (ret);
 }
@@ -73,13 +73,19 @@ int     ft_parse_line(char *line, t_parser *p)
 void    ft_paste_parser(t_parser *p, t_env *e)
 {
     e->nb_ants = p->nb_ants;
+    if (p->cursor_rooms != p->nb_rooms)
+        ft_error("Error : wrong number of rooms\n");
     e->nb_rooms = p->nb_rooms;
+    if (p->cursor_tubes != p->nb_tubes)
+        ft_error("Error : wrong number of tubes\n");
     e->nb_tubes = p->nb_tubes;
+    if (p->start_flag != 1 || p->end_flag != 1)
+        ft_error("Error : start or end not defined\n");
     e->start_room = p->start_room;
     e->end_room = p->end_room;
-    //Remove these dups later
-    e->start_room = ft_strdup("Start");
-    e->end_room = ft_strdup("End");
+    e->mat = ft_matrix_create(p);
+    // e->start_room = ft_strdup("Start");
+    // e->end_room = ft_strdup("End");
 }
 
 int     ft_parse_stdin(t_env *e)
@@ -102,6 +108,7 @@ int     ft_parse_stdin(t_env *e)
       free(line);
       ft_free_env(e, 1);
     }
+    ft_printf("%s\n", line);
     n++;
     free(line);
   }

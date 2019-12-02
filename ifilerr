@@ -1,10 +1,11 @@
 4
 3
 3
+##end
 A 0 0
 B 1 1
+##start
 C 2 2
-##end
 A-B
 B-C
-A-A
+C-A

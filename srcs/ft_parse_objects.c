@@ -35,7 +35,8 @@ int    ft_parse_tube(char *line, t_parser *p)
         ft_error("Error : Wrong room label\n");
     p->tubes[p->cursor_tubes].room_1 = ft_strdup(tab[0]);
     p->tubes[p->cursor_tubes].room_2 = ft_strdup(tab[1]);
-    
+    // ft_printf("Tube from %s to %s\n",  p->tubes[p->cursor_tubes].room_1, p->tubes[p->cursor_tubes].room_2);
+    p->cursor_tubes++;
     return (1);
 }
 
@@ -50,10 +51,21 @@ int    ft_parse_room(char *line, t_parser *p)
     if (!ft_isnum(tab[1]) || !ft_isnum(tab[2]))
         ft_error("Error : Not well room line\n");
     //ptet free aussi quoi
+    if (p->start_flag == -1)
+    {
+        p->start_room = ft_strdup(tab[0]);
+        p->start_flag = 1;
+    }
+    else if (p->end_flag == -1)
+    {
+        p->end_room = ft_strdup(tab[0]);
+        p->end_flag = 1;
+    }    
     p->rooms[p->cursor_rooms].label = ft_strdup(tab[0]);
     p->rooms[p->cursor_rooms].x_pos = ft_atoi(tab[1]);
     p->rooms[p->cursor_rooms].y_pos = ft_atoi(tab[2]);
     // ft_free_anything((void *)tab[0]);
+    // ft_printf("Room %s at (%d, %d)\n", p->rooms[p->cursor_rooms].label, p->rooms[p->cursor_rooms].x_pos, p->rooms[p->cursor_rooms].y_pos);
     p->cursor_rooms++;
     return (1);
 }

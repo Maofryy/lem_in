@@ -24,6 +24,7 @@ int main(int ac, char **av)
     if (ac - e.ac_start >= 2)
         ft_print_usage(1);
     ft_init_env(&e);
+    // ft_printf("Hey\n");
     ft_parse_stdin(&e);
     ft_printf("---------------Parsing finished----------------\n");
     //check if cursors really correspond to the numbers provided, maybe other types of user error ?
