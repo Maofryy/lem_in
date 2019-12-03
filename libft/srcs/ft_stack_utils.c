@@ -1,21 +1,23 @@
 #include "libft.h"
 # define INT_MIN -2147483648
 
-t_list *ft_list_new(int const data)
+t_stack *ft_stack_new(int const data)
 {
-	t_list *new;
+	t_stack *new;
 
-	new = ft_lstnew(&data, sizeof(data));
+	new = (t_stack *)malloc(sizeof(t_stack));
+	new->data = data;
+	new->next = NULL;
 	return (new);
 }
 
-void	ft_list_push_tail(t_list **s, int new_data)
+void	ft_stack_push_tail(t_stack **s, int new_data)
 {
-	t_list *new;
-	t_list *t;
+	t_stack *new;
+	t_stack *t;
 
 	t = *s;
-	new = ft_list_new(new_data);
+	new = ft_stack_new(new_data);
 	if (t == NULL)
 		*s = new;
 	else
@@ -27,34 +29,34 @@ void	ft_list_push_tail(t_list **s, int new_data)
 }
 
 // To change lata
-long int	ft_list_pop_tail(t_list **s)
+long int	ft_stack_pop_tail(t_stack **s)
 {
-	int			*ret;
-	t_list	*t;
+	int			ret;
+	t_stack	*t;
 
 	ret = 0;
 	if (*s == NULL)
 		return (INT_MIN - 1);
 	if ((*s)->next == NULL) {
-			ret = (int *)(*s)->content;
+			ret = (*s)->data;
 			free((*s));
-			return ((int)*ret);
+			return ((int)ret);
 	}
 	t = (*s);
 	while (t->next->next != NULL) {
 			t = t->next;
 	}
-	ret = (int *)t->next->content;
+	ret = t->next->data;
 	free(t->next);
 	t->next = NULL;
-	return ((int)*ret);
+	return ((int)ret);
 }
 
-void	ft_list_push(t_list **s, int new_data)
+void	ft_stack_push(t_stack **s, int new_data)
 {
-	t_list *new;
+	t_stack *new;
 
-	new = ft_list_new(new_data);
+	new = ft_stack_new(new_data);
 	if (s != NULL && new != NULL)
 	{
 		new->next = *s;
@@ -62,23 +64,23 @@ void	ft_list_push(t_list **s, int new_data)
 	}
 }
 
-long int	ft_list_pop(t_list **s)
+long int	ft_stack_pop(t_stack **s)
 {
-	int			*ret;
-	t_list	*next;
+	int			ret;
+	t_stack	*next;
 
 	if (*s == NULL)
 		return (INT_MIN - 1);
 	next = (*s)->next;
-	ret = (int *)(*s)->content;
+	ret = (*s)->data;
 	free(*s);
 	*s = next;
-	return (*ret);
+	return ((int)ret);
 }
 
-int	ft_list_size(t_list *s)
+int	ft_stack_size(t_stack *s)
 {
-	t_list *t;
+	t_stack *t;
 	int			i;
 
 	t = s;
@@ -93,9 +95,9 @@ int	ft_list_size(t_list *s)
 	return (i);
 }
 
-void	ft_list_del(t_list **s)
+void	ft_stack_del(t_stack **s)
 {
-	t_list *t;
+	t_stack *t;
 
 	if (*s == NULL)
 		return ;
@@ -108,30 +110,30 @@ void	ft_list_del(t_list **s)
 	free(*s);
 }
 
-void	ft_list_print(t_list *s)
+void	ft_stack_print(t_stack *s)
 {
-	t_list *t;
+	t_stack *t;
 
 	t = s;
-	ft_printf("list | ");
+	ft_printf("stack | ");
 	while (t != NULL && t->next != NULL)
 	{
-		ft_printf("%d ", *((int *)t->content));
+		ft_printf("%d ", t->data);
 		t = t->next;
 	}
 	ft_printf(" |\n");
 }
 
-int	ft_list_contains(t_list *s, int n)
+int	ft_stack_contains(t_stack *s, int n)
 {
-	t_list *t;
+	t_stack *t;
 
 	t = s;
 	if (t == NULL)
 		return (0);
 	while (t->next != NULL)
 	{
-		if (*((int *)t->content) == n)
+		if (t->data == n)
 			return (1);
 		t = t->next;
 	}

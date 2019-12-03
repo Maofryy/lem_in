@@ -15,6 +15,7 @@ void    ft_init_env(t_env *e)
 int main(int ac, char **av)
 {
     t_env e;
+    t_list *lst;
 
     //Read options
     (void)av;
@@ -26,7 +27,7 @@ int main(int ac, char **av)
     ft_printf("---------------Parsing finished----------------\n");
     ft_printf("nb ants = %d\n", e.nb_ants);
     ft_print_matrix(*e.mat);
-    ft_printf("flow = %d\n", ft_solve(e.mat));
+    lst = ft_solve(e.mat);
     //ft_free_env(&e, 0);
     ft_printf("Ending main\n");
     return (0);

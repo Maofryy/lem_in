@@ -71,7 +71,7 @@ int     ft_malloc_tube(t_parser *p, int ret);
 /*
 ** Solve
 */
-int     **ft_solve(t_matrix *mat);
+t_list  *ft_solve(t_matrix *mat);
 
 /*
 ** Matrix

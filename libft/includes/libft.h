@@ -26,6 +26,12 @@ typedef	struct	s_list
 	struct s_list		*next;
 }				t_list;
 
+typedef struct		s_stack
+{
+	int				data;
+	struct s_stack	*next;
+}					t_stack;
+
 void			*ft_memset(void *b, int c, size_t len);
 void			ft_bzero(void *s, size_t n);
 void			*ft_memcpy(void *dst, const void *src, size_t n);
@@ -89,6 +95,7 @@ void			ft_lst_push(t_list **alst, t_list *new);
 void			ft_lst_push_tail(t_list **alst, t_list *new);
 void			ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list			*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
+int				ft_lst_size(t_list *s);
 void			ft_sort_integer_list(int *tab, int size);
 long int		ft_power(long int nb, int power);
 double			ft_dpower(double nb, int power);
@@ -96,7 +103,7 @@ int				ft_sqrt(int nb);
 int				ft_find_next_prime(int nb);
 char			*ft_strcapitalize(char *str);
 char			*ft_strjoinfree(char *s1, char *s2, int n);
-int			get_next_line(const int fd, char **line);
+int				get_next_line(const int fd, char **line);
 char			*ft_strnjoinfree(char *s1, char *s2, size_t n);
 char			*ft_itoa(int n);
 char			*ft_itoa_base(int n, int base);
@@ -112,15 +119,15 @@ int       		ft_max(int a, int b);
 int	    		ft_abs(int n);
 int				ft_isnum(char *str);
 size_t			count_words(char *str, char c);
-t_list 			*ft_list_new(int const data);
-void			ft_list_push_tail(t_list **s, int new_data);
-long int		ft_list_pop_tail(t_list **s);
-long int		ft_list_pop(t_list **s);
-void			ft_list_push(t_list **s, int new_data);
+t_stack			*ft_stack_new(int const data);
+void			ft_stack_push_tail(t_stack **s, int new_data);
+long int		ft_stack_pop_tail(t_stack **s);
+long int		ft_stack_pop(t_stack **s);
+void			ft_stack_push(t_stack **s, int new_data);
 
-int				ft_list_size(t_list *s);
-void			ft_list_del(t_list **s);
-void			ft_list_print(t_list *s);
-int				ft_list_contains(t_list *s, int n);
+int				ft_stack_size(t_stack *s);
+void			ft_stack_del(t_stack **s);
+void			ft_stack_print(t_stack *s);
+int				ft_stack_contains(t_stack *s, int n);
 
 #endif

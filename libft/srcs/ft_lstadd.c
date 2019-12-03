@@ -62,3 +62,20 @@ t_list	*ft_lst_pop_tail(t_list **alst)
 	}
 	return (elem);
 }
+
+int	ft_lst_size(t_list *s)
+{
+	t_list *t;
+	int			i;
+
+	t = s;
+	if (t == NULL)
+		return (0);
+	i = 1;
+	while (t->next != NULL)
+	{
+		t = t->next;
+		i++;
+	}
+	return (i);
+}

@@ -1,40 +1,48 @@
 #include "lem_in.h"
 
-int     ft_intlst_size(int *src)
+int     ft_lst_contains(t_list *l, int n)
 {
-    int i;
+    t_list *t;
 
-    i = -1;
-    while (src[++i] != -1)
-        ;
-    return (i);
+	t = l;
+	if (t == NULL)
+		return (0);
+	while (t->next != NULL)
+	{
+		// Compare
+        if (((t_stack *)t->content)->data == n)
+            return (1);
+        t = t->next;
+	}
+    return (0);
 }
 
-int     ft_next_adj(int *v, int u, t_matrix *mat)
+int     ft_next_adj(int *v, t_stack *u, t_matrix *mat)
 {
     (*v)++;
-    while (mat->adj[u][*v] != 1 && *v < mat->size)
+    while (mat->adj[u->data][*v] != 1 && *v < mat->size)
             (*v)++;
     if (*v >= mat->size)
         return (0);
     return (1);
 }
 
-int     ft_ucs(int start, int end, int size, t_matrix *mat)
+t_stack    *ft_ucs(int start, int end, int size, t_matrix *mat)
 {
     t_list *closed;
     t_list *open;
-    int u;
+    t_stack *u;
     int v;
 
-    open = ft_list_new(start);
-    closed = ft_list_new(0);
-    ft_list_pop(&closed);
+
+    open = ft_lstnew(ft_stack_new(start), sizeof(t_stack *));
+    closed = ft_lstnew(0, sizeof(t_stack *));
+    ft_lst_pop(&closed);
     (void)size;
-    while (ft_list_size(open) != 0)
+    while (ft_lst_size(open) != 0)
     {
-        u = (int)ft_list_pop(&open);
-        if (u == end)
+        u = (t_stack *)(ft_lst_pop(&open)->content);
+        if (u->data == end)
             return (u);
         //Tant que v est adjacent de u;
         v = -1;
@@ -42,15 +50,20 @@ int     ft_ucs(int start, int end, int size, t_matrix *mat)
         {
             // le 1er trouve sera forcement le plus court vu qu'on cherche par "paliers"
             printf("v : %d\n", v);
+
             // ft_printf("open size = %d\n", ft_list_size(open));
             // ft_printf("closed size = %d\n", ft_list_size(closed));
             if (v == end)
                 return (u);
-            if (ft_list_contains(open, v) || ft_list_contains(closed, v))
+            if (ft_lst_contains(open, v) || ft_lst_contains(closed, v))
                 continue ;
-            ft_list_push_tail(&open, v);
+            ft_stack_print(u);
+            ft_stack_push_tail(&u, v);
+            ft_printf("debug\n");
+            ft_lst_push_tail(&open, ft_lstnew(u, sizeof(t_stack *)));
+            ft_stack_pop(&u);
         }
-        ft_list_push_tail(&closed, u);
+        ft_lst_push_tail(&closed, ft_lstnew(u, sizeof(t_stack *)));
     }
     return (u);
 }
@@ -58,15 +71,16 @@ int     ft_ucs(int start, int end, int size, t_matrix *mat)
 
 
 
-int     **ft_solve(t_matrix *mat)
+t_list *ft_solve(t_matrix *mat)
 {
-    int **path;
+    t_list *path;
+    t_stack *spath;
 
     // Linked list of pathS ?
-    path = (int **)malloc(sizeof(int *) * 10);
-    *path = (int *)malloc(sizeof(int) * 10);
-    **path = ft_ucs(0, mat->size - 1, mat->size, mat);
-    
+
+    path = ft_lstnew(ft_ucs(0, mat->size - 1, mat->size, mat), sizeof(t_stack *));
+    (void)spath;
+    ft_stack_print(path->content);
     // while path isnt emtpy
     //      add to int **tab
     //      remove path from mat
