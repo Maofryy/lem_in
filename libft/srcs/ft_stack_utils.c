@@ -139,3 +139,22 @@ int	ft_stack_contains(t_stack *s, int n)
 	}
 	return (0);
 }
+
+t_stack *ft_stack_copy(t_stack *s)
+{
+        t_stack *d;
+
+        if (s == NULL)
+                return (NULL);
+        else if (s->next == NULL)
+                return (ft_stack_new(s->data));
+        else
+        {
+                while (s->next != NULL)
+                {
+                        ft_stack_push(&d, s->data);
+                        s = s->next;
+                }
+        }
+        return (d);
+}
