@@ -15,7 +15,7 @@ void    ft_init_env(t_env *e)
 int main(int ac, char **av)
 {
     t_env e;
-    t_list *lst;
+    t_paths *lst;
 
     //Read options
     (void)av;
@@ -28,6 +28,8 @@ int main(int ac, char **av)
     ft_printf("nb ants = %d\n", e.nb_ants);
     ft_print_matrix(*e.mat);
     lst = ft_solve(e.mat);
+
+    (void)lst;
     //ft_free_env(&e, 0);
     ft_printf("Ending main\n");
     return (0);

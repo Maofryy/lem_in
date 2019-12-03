@@ -116,12 +116,26 @@ void	ft_stack_print(t_stack *s)
 
 	t = s;
 	ft_printf("stack | ");
-	while (t != NULL && t->next != NULL)
+	while (t != NULL)
 	{
 		ft_printf("%d ", t->data);
 		t = t->next;
 	}
 	ft_printf(" |\n");
+}
+
+void	ft_stack_print_labels(t_stack *s, char **labels)
+{
+	t_stack *t;
+
+	t = s;
+	ft_printf("stack | ");
+	while (t != NULL)
+	{
+		ft_printf("%s ", labels[t->data]);
+		t = t->next;
+	}
+	ft_printf("|\n");
 }
 
 int	ft_stack_contains(t_stack *s, int n)
@@ -140,21 +154,28 @@ int	ft_stack_contains(t_stack *s, int n)
 	return (0);
 }
 
-t_stack *ft_stack_copy(t_stack *s)
+t_stack *ft_stack_copy(t_stack *head)
 {
-        t_stack *d;
+	t_stack *current = head;
+	t_stack *newList = NULL; // head of the new list
+	t_stack *tail = NULL;	// point to last node in new list
 
-        if (s == NULL)
-                return (NULL);
-        else if (s->next == NULL)
-                return (ft_stack_new(s->data));
-        else
-        {
-                while (s->next != NULL)
-                {
-                        ft_stack_push(&d, s->data);
-                        s = s->next;
-                }
-        }
-        return (d);
+	while (current != NULL)
+	{
+		if (newList == NULL)
+		{
+			newList = ft_stack_new(current->data);
+			tail = newList;
+		}
+		else
+		{
+			tail->next = (t_stack *)malloc(sizeof(t_stack));
+			tail = tail->next;
+			tail->data = current->data;
+			tail->next = NULL;
+		}
+		current = current->next;
+	}
+
+	return (newList);
 }

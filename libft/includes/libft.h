@@ -124,10 +124,11 @@ void			ft_stack_push_tail(t_stack **s, int new_data);
 long int		ft_stack_pop_tail(t_stack **s);
 long int		ft_stack_pop(t_stack **s);
 void			ft_stack_push(t_stack **s, int new_data);
-
+t_stack			*ft_stack_copy(t_stack *s);
 int				ft_stack_size(t_stack *s);
 void			ft_stack_del(t_stack **s);
 void			ft_stack_print(t_stack *s);
 int				ft_stack_contains(t_stack *s, int n);
+void			ft_stack_print_labels(t_stack *s, char **labels);
 
 #endif

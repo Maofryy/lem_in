@@ -37,6 +37,7 @@ SRC_NAME = ft_lem_in.c \
 			ft_parser.c \
 			ft_parse_objects.c \
 			ft_solve.c \
+			ft_paths.c \
 			ft_matrix.c
 			
 OBJ_NAME = $(SRC_NAME:.c=.o)
@@ -51,7 +52,10 @@ WHITE = \033[0m
 all : $(NAME)
 	$(MAKE) -C $(LIB_PATH)
 
-$(NAME) : $(OBJ)  ./includes/lem_in.h
+$(LIB) :
+	$(MAKE) -C $(LIB_PATH)
+
+$(NAME) : $(OBJ)  ./includes/lem_in.h $(LIB)
 	$(MAKE) -C $(LIB_PATH)
 	$(CC) $(CFLAGS) $(CPPFLAGS) $(OBJ) $(LIBS) -o $@
 

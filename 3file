@@ -1,0 +1,15 @@
+10
+5
+5
+##start
+S 0 0
+C 0 0
+D 0 0
+B 0 0
+##end
+E 0 0
+S-C
+S-B
+B-D
+D-E
+C-E

@@ -5,6 +5,12 @@
 # include "ft_printf.h"
 # include <fcntl.h>
 
+typedef struct      s_paths
+{
+    t_stack         *s;
+    struct s_paths   *next;
+}                   t_paths;
+
 typedef struct      s_matrix
 {
     int     **adj;
@@ -71,7 +77,7 @@ int     ft_malloc_tube(t_parser *p, int ret);
 /*
 ** Solve
 */
-t_list  *ft_solve(t_matrix *mat);
+t_paths  *ft_solve(t_matrix *mat);
 
 /*
 ** Matrix
@@ -92,5 +98,16 @@ void	ft_error(char *str);
 ** Options
 */
 void	ft_read_options(int ac, char **av, t_env *e);
+
+/*
+** Paths linked list 
+*/
+t_paths *ft_paths_new(t_stack *new);
+t_stack	*ft_paths_pop(t_paths **s);
+void    ft_paths_push_tail(t_paths **s, t_stack *new);
+int	    ft_paths_contains(t_paths *s, int n);
+int     ft_paths_size(t_paths *s);
+void	ft_paths_push(t_paths **s, t_stack *new);
+
 
 #endif
