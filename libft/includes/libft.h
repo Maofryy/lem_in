@@ -83,7 +83,10 @@ void			ft_putnbr_fd(int n, int fd);
 t_list			*ft_lstnew(void const *content, size_t content_size);
 void			ft_lstdelone(t_list **alst, void (*del)(void *, size_t));
 void			ft_lstdel(t_list **alst, void (*del)(void *, size_t));
-void			ft_lstadd(t_list **alst, t_list *new);
+t_list			*ft_lst_pop(t_list **s);
+t_list			*ft_lst_pop_tail(t_list **s);
+void			ft_lst_push(t_list **alst, t_list *new);
+void			ft_lst_push_tail(t_list **alst, t_list *new);
 void			ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list			*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 void			ft_sort_integer_list(int *tab, int size);
@@ -111,10 +114,13 @@ int				ft_isnum(char *str);
 size_t			count_words(char *str, char c);
 t_list 			*ft_list_new(int const data);
 void			ft_list_push_tail(t_list **s, int new_data);
-long int		ft_stack_pop_tail(t_list **s);
-void			ft_list_push(t_list **s, int new_data);
+long int		ft_list_pop_tail(t_list **s);
 long int		ft_list_pop(t_list **s);
+void			ft_list_push(t_list **s, int new_data);
+
 int				ft_list_size(t_list *s);
 void			ft_list_del(t_list **s);
+void			ft_list_print(t_list *s);
+int				ft_list_contains(t_list *s, int n);
 
 #endif

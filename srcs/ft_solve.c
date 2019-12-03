@@ -1,81 +1,75 @@
 #include "lem_in.h"
 
-int capacities[10][10];
-
-int flowPassed[10][10];
-
-int parentsList[10];       
-
-int currentPathCapacity[10]; 
-
-int bfs(int startNode, int endNode, t_matrix *mat)
+int     ft_intlst_size(int *src)
 {
-    memset(parentsList, -1, sizeof(parentsList));
-    memset(currentPathCapacity, 0, sizeof(currentPathCapacity));
-    t_list *q;
+    int i;
 
-    q = ft_list_new(startNode);
-    // PUSH ft_list_push(&q, int);
+    i = -1;
+    while (src[++i] != -1)
+        ;
+    return (i);
+}
 
-    parentsList[startNode] = -2;
-    currentPathCapacity[startNode] = 999;
+int     ft_next_adj(int *v, int u, t_matrix *mat)
+{
+    (*v)++;
+    while (mat->adj[u][*v] != 1 && *v < mat->size)
+            (*v)++;
+    if (*v >= mat->size)
+        return (0);
+    return (1);
+}
 
-    while(ft_list_size(q) != 0)
+int     ft_ucs(int start, int end, int size, t_matrix *mat)
+{
+    t_list *closed;
+    t_list *open;
+    int u;
+    int v;
+
+    open = ft_list_new(start);
+    closed = ft_list_new(0);
+    ft_list_pop(&closed);
+    (void)size;
+    while (ft_list_size(open) != 0)
     {
-        int i;
-        int currentNode = ft_list_pop(&q);
-
-        // for(int i=0; i < mat->adj[currentNode].size(); i++)
-        i = -1;
-        while (i < mat->size)
+        u = (int)ft_list_pop(&open);
+        if (u == end)
+            return (u);
+        //Tant que v est adjacent de u;
+        v = -1;
+        while (ft_next_adj(&v, u, mat) == 1)
         {
-            int to = mat->adj[currentNode][i];
-            if(parentsList[to] == -1)
-            {
-                if(capacities[currentNode][to] - flowPassed[currentNode][to] > 0)
-                {
-                    parentsList[to] = currentNode;
-                    currentPathCapacity[to] = ft_min(currentPathCapacity[currentNode], 
-                    capacities[currentNode][to] - flowPassed[currentNode][to]);
-                    if(to == endNode)
-                    {
-                        return currentPathCapacity[endNode];
-                    }
-                    ft_list_push(&q, to);
-                }
-
-            }
+            // le 1er trouve sera forcement le plus court vu qu'on cherche par "paliers"
+            printf("v : %d\n", v);
+            // ft_printf("open size = %d\n", ft_list_size(open));
+            // ft_printf("closed size = %d\n", ft_list_size(closed));
+            if (v == end)
+                return (u);
+            if (ft_list_contains(open, v) || ft_list_contains(closed, v))
+                continue ;
+            ft_list_push_tail(&open, v);
         }
+        ft_list_push_tail(&closed, u);
     }
-    return 0;
+    return (u);
 }
 
 
-int edmondsKarp(int startNode, int endNode, t_matrix *mat)
-{
-    int maxFlow = 0;
-      while(1)
-    {
-        int flow = bfs(startNode, endNode, mat);
-        if (flow == 0) 
-            break;
-        maxFlow += flow;
-        int currentNode = endNode;
-        while(currentNode != startNode)
-        {
-            int previousNode = parentsList[currentNode];
-            flowPassed[previousNode][currentNode] += flow;
-            flowPassed[currentNode][previousNode] -= flow;
-            currentNode = previousNode;
-        }
-    }
-    return maxFlow;
-}
 
-int     ft_solve(t_matrix *mat)
-{
-    int flow;
 
-    flow = edmondsKarp(0, mat->size - 1, mat);
-    return (flow);
+int     **ft_solve(t_matrix *mat)
+{
+    int **path;
+
+    // Linked list of pathS ?
+    path = (int **)malloc(sizeof(int *) * 10);
+    *path = (int *)malloc(sizeof(int) * 10);
+    **path = ft_ucs(0, mat->size - 1, mat->size, mat);
+    
+    // while path isnt emtpy
+    //      add to int **tab
+    //      remove path from mat
+    
+    return (path);
 }

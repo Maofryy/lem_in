@@ -122,6 +122,5 @@ t_matrix    *ft_matrix_create(t_parser *p)
     mat = ft_init_matrix(p);
     ft_swap(mat, 0, p->start_room, p->nb_rooms);
     ft_swap(mat, p->nb_rooms - 1, p->end_room, p->nb_rooms);
-    ft_print_matrix(*mat);
     return (mat);
 }
