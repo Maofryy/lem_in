@@ -29,15 +29,16 @@ int     ft_next_adj(int *v, t_stack *u, t_matrix *mat)
 
 t_stack    *ft_ucs(int start, int end, int size, t_matrix *mat)
 {
-    t_list *closed;
+    t_stack *closed;
     t_list *open;
     t_stack *u;
+    t_stack *tmp;
     int v;
 
 
     open = ft_lstnew(ft_stack_new(start), sizeof(t_stack *));
-    closed = ft_lstnew(0, sizeof(t_stack *));
-    ft_lst_pop(&closed);
+    closed = ft_stack_new(0);
+    ft_stack_pop(&closed);
     (void)size;
     while (ft_lst_size(open) != 0)
     {
@@ -49,21 +50,20 @@ t_stack    *ft_ucs(int start, int end, int size, t_matrix *mat)
         while (ft_next_adj(&v, u, mat) == 1)
         {
             // le 1er trouve sera forcement le plus court vu qu'on cherche par "paliers"
-            printf("v : %d\n", v);
+            ft_printf("v : %d\n", v);
 
             // ft_printf("open size = %d\n", ft_list_size(open));
-            // ft_printf("closed size = %d\n", ft_list_size(closed));
+            // ft_printf("closed size = %d\n", ft_stack_size(closed));
             if (v == end)
                 return (u);
-            if (ft_lst_contains(open, v) || ft_lst_contains(closed, v))
+            if (ft_lst_contains(open, v) || ft_stack_contains(closed, v))
                 continue ;
-            ft_stack_print(u);
-            ft_stack_push_tail(&u, v);
+            tmp = ft_stack_copy(u);
+            ft_stack_push(&tmp, v);
             ft_printf("debug\n");
-            ft_lst_push_tail(&open, ft_lstnew(u, sizeof(t_stack *)));
-            ft_stack_pop(&u);
+            ft_lst_push_tail(&open, ft_lstnew(tmp, sizeof(t_stack *)));
         }
-        ft_lst_push_tail(&closed, ft_lstnew(u, sizeof(t_stack *)));
+        ft_stack_push_tail(&closed, u->data0));
     }
     return (u);
 }
