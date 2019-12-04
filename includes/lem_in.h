@@ -85,6 +85,7 @@ t_paths  *ft_solve(t_matrix *mat);
 t_matrix    *ft_matrix_create(t_parser *p);
 void        ft_free_matrix(t_matrix *mat);
 void        ft_print_matrix(t_matrix mat);
+void        ft_matrix_remove_path(t_stack *s, t_matrix *mat);
 
 /*
 ** Exit

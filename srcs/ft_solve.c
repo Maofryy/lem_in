@@ -29,7 +29,7 @@ int     ft_next_adj(int *v, t_stack *u, t_matrix *mat)
 
 
 
-t_stack    *ft_ucs(int start, int end, int size, t_matrix *mat)
+t_stack    *ft_ucs(int start, int end, t_matrix *mat)
 {
     t_stack *closed;
     t_paths *open;
@@ -37,12 +37,10 @@ t_stack    *ft_ucs(int start, int end, int size, t_matrix *mat)
     t_stack *tmp;
     int v;
 
-    ft_printf("Start = %s and End = %s\n", mat->labels[start], mat->labels[end]);
     u = ft_stack_new(start);
     // open = ft_lstnew((void *)u, sizeof(t_stack *));
     open = ft_paths_new(u);
     closed = ft_stack_new(start);
-    (void)size;
     while (ft_paths_size(open) != 0)
     {
         u = ft_paths_pop(&open);
@@ -71,18 +69,23 @@ t_stack    *ft_ucs(int start, int end, int size, t_matrix *mat)
         }
         ft_stack_push(&closed, u->data);
     }
-    return (u);
+    return (NULL);
 }
 
 t_paths *ft_solve(t_matrix *mat)
 {
     t_paths *path;
 
-    // Linked list of pathS ?
-    
-    path = ft_paths_new(ft_ucs(0, mat->size - 1, mat->size, mat));
-
+    path = ft_paths_new(ft_ucs(0, mat->size - 1, mat));
     ft_stack_print_labels(path->s, mat->labels);
+    while (path->s != NULL)
+    {
+        ft_matrix_remove_path(path->s, mat);
+        ft_print_matrix(*mat);
+        ft_paths_push(&path, ft_ucs(0, mat->size - 1, mat)); 
+        ft_stack_print_labels(path->s, mat->labels);
+        ft_printf("path s addr = %p\n", path->s);
+    }
     // ft_printf("path->s->data = %d\n", path->s->data);
     // ft_printf("path->s->next = %p\n", path->s->next);
     // while path isnt emtpy

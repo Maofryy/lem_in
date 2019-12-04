@@ -115,6 +115,27 @@ void        ft_free_matrix(t_matrix *mat)
     free(mat);
 }
 
+void        ft_matrix_remove_path(t_stack *s, t_matrix *mat)
+{
+    int previous;
+    int next;
+
+    previous = 0;
+    next = 0;
+    if (s->next == NULL)
+        ft_error("Error : only source in path\n");
+    while (s->next != NULL && next != mat->size - 1)
+    {
+        previous = s->data;
+        s = s->next;
+        next = s->data;
+        if (next == previous)
+            ft_error("Error : same room in path\n");
+        mat->adj[previous][next] = 0;
+        mat->adj[next][previous] = 0;
+    }
+}
+
 t_matrix    *ft_matrix_create(t_parser *p)
 {
     t_matrix    *mat;
