@@ -100,15 +100,16 @@ int     ft_parse_line(char *line, t_parser *p)
 void    ft_paste_parser(t_parser *p, t_env *e)
 {
     e->nb_ants = p->nb_ants;
+    ft_printf("%d\n",e->nb_ants);
     if (p->cursor_rooms != p->nb_rooms)
         ft_error("Error : wrong number of rooms\n");
     if (p->cursor_tubes != p->nb_tubes)
         ft_error("Error : wrong number of tubes\n");
     if (p->start_flag != 1 || p->end_flag != 1)
         ft_error("Error : start or end not defined\n");
+    ft_print_rooms(p);
+    ft_print_tubes(p);
     e->mat = ft_matrix_create(p);
-    // e->start_room = ft_strdup("Start");
-    // e->end_room = ft_strdup("End");
 }
 
 int     ft_parse_stdin(t_env *e)
@@ -131,11 +132,9 @@ int     ft_parse_stdin(t_env *e)
       free(line);
       ft_free_env(e, 1);
     }
-    ft_printf("%s\n", line);
     n++;
     free(line);
   }
-  ft_printf("start_flag : %d | end_flag : %d\n", p->start_flag, p->end_flag);
   ft_paste_parser(p, e);
   ft_free_parser(p);
   return (n);

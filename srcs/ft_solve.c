@@ -27,8 +27,6 @@ int     ft_next_adj(int *v, t_stack *u, t_matrix *mat)
     return (1);
 }
 
-
-
 t_stack    *ft_ucs(int start, int end, t_matrix *mat)
 {
     t_stack *closed;
@@ -58,6 +56,7 @@ t_stack    *ft_ucs(int start, int end, t_matrix *mat)
             if (v == end)
             {
                 ft_stack_push(&u, v);
+                ft_stack_reverse(&u);
                 return (u);
             }
             // ft_printf("u = %s | v = %s\n", mat->labels[u->data], mat->labels[v]);
@@ -76,16 +75,18 @@ t_paths *ft_solve(t_matrix *mat)
 {
     t_paths *path;
 
+
     path = ft_paths_new(ft_ucs(0, mat->size - 1, mat));
-    ft_stack_print_labels(path->s, mat->labels);
     while (path->s != NULL)
     {
         ft_matrix_remove_path(path->s, mat);
-        ft_print_matrix(*mat);
+        // ft_print_matrix(*mat);
         ft_paths_push(&path, ft_ucs(0, mat->size - 1, mat)); 
-        ft_stack_print_labels(path->s, mat->labels);
-        ft_printf("path s addr = %p\n", path->s);
+        
     }
+    ft_paths_pop(&path);
+    ft_paths_reverse(&path);
+    ft_paths_print(path, mat->labels);
     // ft_printf("path->s->data = %d\n", path->s->data);
     // ft_printf("path->s->next = %p\n", path->s->next);
     // while path isnt emtpy

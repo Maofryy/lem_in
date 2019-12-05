@@ -38,6 +38,8 @@ SRC_NAME = ft_lem_in.c \
 			ft_parse_objects.c \
 			ft_solve.c \
 			ft_paths.c \
+			ft_print.c \
+			ft_ant.c \
 			ft_matrix.c
 			
 OBJ_NAME = $(SRC_NAME:.c=.o)

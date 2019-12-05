@@ -86,3 +86,33 @@ int	ft_paths_size(t_paths *s)
 	}
 	return (i);
 }
+
+void	ft_paths_print(t_paths *s, char **labels)
+{
+	t_paths *t;
+
+	t = s;
+	while (t != NULL)
+	{
+		ft_stack_print_labels(t->s, labels);
+		t = t->next;
+	}
+}
+
+void ft_paths_reverse(t_paths **s)
+{ 
+    t_paths *prev;
+    t_paths *current;
+    t_paths *next;
+
+	prev = NULL;
+	current = *s;
+	next = NULL;
+    while (current != NULL) { 
+        next = current->next; 
+        current->next = prev; 
+        prev = current; 
+        current = next; 
+    } 
+    *s = prev;
+} 

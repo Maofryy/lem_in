@@ -154,12 +154,15 @@ int	ft_stack_contains(t_stack *s, int n)
 	return (0);
 }
 
-t_stack *ft_stack_copy(t_stack *head)
+t_stack *ft_stack_copy(t_stack *s)
 {
-	t_stack *current = head;
-	t_stack *newList = NULL; // head of the new list
-	t_stack *tail = NULL;	// point to last node in new list
+	t_stack *current;
+	t_stack *newList;
+	t_stack *tail;
 
+	current = s;
+	newList = NULL;
+	tail = NULL;
 	while (current != NULL)
 	{
 		if (newList == NULL)
@@ -176,6 +179,23 @@ t_stack *ft_stack_copy(t_stack *head)
 		}
 		current = current->next;
 	}
-
 	return (newList);
 }
+
+void ft_stack_reverse(t_stack **s)
+{ 
+    t_stack *prev;
+    t_stack *current;
+    t_stack *next;
+
+	prev = NULL;
+	current = *s;
+	next = NULL;
+    while (current != NULL) { 
+        next = current->next; 
+        current->next = prev; 
+        prev = current; 
+        current = next; 
+    } 
+    *s = prev;
+} 

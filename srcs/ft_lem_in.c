@@ -16,21 +16,22 @@ int main(int ac, char **av)
 {
     t_env e;
     t_paths *lst;
+    int     max_flow;
 
     //Read options
     (void)av;
+    
     ft_init_env(&e);
     if (ac - e.ac_start >= 2)
         ft_print_usage(1);
     ft_init_env(&e);
     ft_parse_stdin(&e);
-    ft_printf("---------------Parsing finished----------------\n");
-    ft_printf("nb ants = %d\n", e.nb_ants);
-    ft_print_matrix(*e.mat);
+    ft_printf("\n");
     lst = ft_solve(e.mat);
-
-    (void)lst;
-    //ft_free_env(&e, 0);
+    max_flow = ft_paths_size(lst);
+    ft_printf("max flow = %d\n", max_flow);
+    ft_print_ants(e.nb_ants, lst, e.mat);
+    ft_free_env(&e, 0);
     ft_printf("Ending main\n");
     return (0);
 }
