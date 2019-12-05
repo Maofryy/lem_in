@@ -35,8 +35,8 @@ typedef struct      s_tube
 typedef struct      s_ant
 {
     int nb;
-    t_stack *path;
-    int room;
+    int *rooms;
+    int length;
     int delay;
 }                   t_ant;
 
@@ -129,4 +129,4 @@ void    ft_print_tubes(t_parser *p);
 void    ft_print_ants(int nb_ants, t_paths *path, t_matrix *mat);
 t_ant   ft_place_ant(t_paths *paths, int path_cursor, int *delays, int **rooms, char **labels);
 
-#endif
+    #endif

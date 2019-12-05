@@ -198,4 +198,34 @@ void ft_stack_reverse(t_stack **s)
         current = next; 
     } 
     *s = prev;
-} 
+}
+
+int     ft_stack_getn(t_stack *s, int n)
+{
+    int i;
+
+    i = 0;
+    while (s != NULL && i < n)
+    {
+        s = s->next;
+        i++;
+    }
+    return (s->data);
+}
+
+int		*ft_stack_list(t_stack *s)
+{
+	int *list;
+	int i;
+
+	i = -1;
+	if (s == NULL)
+		return (NULL);
+	list = (int *)malloc(sizeof(int) * ft_stack_size(s));
+	while (s != NULL)
+	{
+		list[++i] = s->data;
+		s = s->next;
+	}
+	return (list);
+}

@@ -131,5 +131,7 @@ void			ft_stack_print(t_stack *s);
 int				ft_stack_contains(t_stack *s, int n);
 void			ft_stack_print_labels(t_stack *s, char **labels);
 void 			ft_stack_reverse(t_stack **s);
+int     		ft_stack_getn(t_stack *path, int n);
+int				*ft_stack_list(t_stack *s);
 
 #endif
