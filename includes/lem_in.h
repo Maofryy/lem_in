@@ -23,11 +23,11 @@ typedef struct      s_room
     char    *label;
     int     x_pos;
     int     y_pos;
+    struct s_room *next;
 }                   t_room;
 
 typedef struct      s_tube
 {
-    char    *label;
     char    *room_1;
     char    *room_2;
 }                   t_tube;
@@ -72,6 +72,16 @@ typedef struct      s_env
     long        nb_ants;
     t_matrix    *mat;
 }                   t_env;
+
+/*
+** Room
+*/
+void	add_room(t_room **head, t_room *room);
+t_room	*search_room(t_room *head, char *link);
+t_room	*duplicate_room(t_room *room);
+t_room	*create_room(char **split);
+void	ft_split_del(char **split);
+void	ft_tab_del(int **tab, int size);
 
 /*
 ** Parser
@@ -120,6 +130,7 @@ void	ft_paths_push(t_paths **s, t_stack *new);
 t_stack *ft_get_stack(t_paths *paths, int n);
 void	ft_paths_print(t_paths *s, char **labels);
 void    ft_paths_reverse(t_paths **s);
+void	ft_paths_del(t_paths **s);
 
 /*
 ** Print

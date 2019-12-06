@@ -34,6 +34,7 @@ NAME = lem_in
 SRC_NAME = ft_lem_in.c \
 			ft_exit.c \
 			ft_options.c \
+			ft_room.c \
 			ft_parser.c \
 			ft_parse_objects.c \
 			ft_solve.c \
@@ -80,6 +81,10 @@ fclean : clean run_clean
 	rm -f $(RUN_EXEC)
 
 re : fclean all
+
+rre :
+	rm -rf $(OBJ_PATH) $(NAME)
+	make all
 
 .PHONY : clean fclean re run_clean
 

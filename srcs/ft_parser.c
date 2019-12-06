@@ -32,10 +32,10 @@ void    ft_free_parser(t_parser *p)
     i = -1;
     while (++i < p->cursor_tubes)
     {
-        free(p->tubes[i].label);
-        free(p->tubes[i].room_1);
+        free(p->tubes[i].room_1); 
         free(p->tubes[i].room_2);
     }
+    
     free(p->tubes);
     free(p);
 }
@@ -122,6 +122,7 @@ int     ft_parse_stdin(t_env *e)
   p = ft_init_parser();
   while (get_next_line(e->o_fd, &line) > 0)
   {
+    // ft_printf("%s\n", line);
     if (ft_strlen(line) == 0 || line[0] == 'L')
     {
       free(line);

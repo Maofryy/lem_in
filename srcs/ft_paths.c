@@ -4,7 +4,7 @@ t_paths *ft_paths_new(t_stack *new)
 {
 	t_paths *new_st;
 
-	new_st = (t_paths *)malloc(sizeof(t_paths));
+	new_st = (t_paths *)malloc(sizeof(t_paths) * 1);
 	new_st->s = new;
 	new_st->next = NULL;
 	return (new_st);
@@ -115,4 +115,21 @@ void ft_paths_reverse(t_paths **s)
         current = next; 
     } 
     *s = prev;
-} 
+}
+
+void	ft_paths_del(t_paths **s)
+{
+	t_paths *t;
+
+	if (*s == NULL)
+		return ;
+	while ((*s)->next != NULL)
+	{
+		ft_stack_del(&(*s)->s);
+		t = (*s)->next;
+		free(*s);
+		*s = t;
+	}
+	ft_stack_del(&(*s)->s);
+	free(*s);
+}
