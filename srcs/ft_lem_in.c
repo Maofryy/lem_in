@@ -25,7 +25,7 @@ int main(int ac, char **av)
         ft_print_usage(1);
     ft_init_env(&e);
     ft_parse_stdin(&e);
-    ft_printf("\n");
+    ft_printf("Parsing finished\n\n");
     lst = ft_solve(e.mat);
     ft_print_ants(e.nb_ants, lst, e.mat);
     ft_free_env(&e, 0);

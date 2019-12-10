@@ -3,14 +3,20 @@
 int         ft_is_adj(t_parser *p, int i, int j)
 {
     int k;
+    t_tube *tmp;
+    t_room *room_i;
+    t_room *room_j;
 
     k = -1;
-    while (++k < p->nb_tubes)
+    room_i = ft_get_room(p->rooms, i);
+    room_j = ft_get_room(p->rooms, j);
+    while (++k < p->cnt_tube)
     {
-        if ((ft_strequ(p->tubes[k].room_1, p->rooms[i].label) 
-            && ft_strequ(p->tubes[k].room_2, p->rooms[j].label))
-            || (ft_strequ(p->tubes[k].room_2, p->rooms[i].label)
-            && ft_strequ(p->tubes[k].room_1, p->rooms[j].label)))
+        tmp = ft_get_tube(p->tubes, k);
+        if ((ft_strequ(tmp->room_1, room_i->label) 
+            && ft_strequ(tmp->room_2, room_j->label))
+            || (ft_strequ(tmp->room_2, room_i->label)
+            && ft_strequ(tmp->room_1, room_j->label)))
             return (1);
     }
     return (0);
@@ -24,16 +30,16 @@ t_matrix    *ft_init_matrix(t_parser *p)
 
     i = -1;
     m = (t_matrix *)malloc(sizeof(t_matrix) * 1);
-    m->adj = (int **)malloc(sizeof(int *) * (p->nb_rooms));
-    m->labels = (char **)malloc(sizeof(char *) * (p->nb_rooms + 1));
-    m->size = p->nb_rooms;
-    while (++i < p->nb_rooms)
+    m->adj = (int **)malloc(sizeof(int *) * (p->cnt_room));
+    m->labels = (char **)malloc(sizeof(char *) * (p->cnt_room + 1));
+    m->size = p->cnt_room;
+    while (++i < p->cnt_room)
     {
         j = -1;
-        m->adj[i] = (int *)malloc(sizeof(int) * (p->nb_rooms));
-        while (++j < p->nb_rooms)
+        m->adj[i] = (int *)malloc(sizeof(int) * (p->cnt_room));
+        while (++j < p->cnt_room)
             m->adj[i][j] = ft_is_adj(p, i ,j);
-        m->labels[i] = ft_strdup(p->rooms[i].label);
+        m->labels[i] = ft_strdup(ft_get_room(p->rooms, i)->label);
     }
     m->labels[i] = 0;
     return (m);
@@ -141,8 +147,8 @@ t_matrix    *ft_matrix_create(t_parser *p)
     t_matrix    *mat;
 
     mat = ft_init_matrix(p);
-    
-    ft_swap(mat, 0, p->start_room, p->nb_rooms);
-    ft_swap(mat, p->nb_rooms - 1, p->end_room, p->nb_rooms);
+    ft_swap(mat, 0, p->start_room, p->cnt_room);
+    ft_swap(mat, p->cnt_room - 1, p->end_room, p->cnt_room);
+    // ft_print_matrix(*mat);
     return (mat);
 }

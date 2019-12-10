@@ -1,22 +1,63 @@
 #include "lem_in.h"
 
-t_room	*search_room(t_room *head, char *link)
+// char *ft_get_room_label(t_room *head, int index)
+// {
+// 	return (ft_get_room(head, index)->label);
+// }
+
+t_room *ft_get_room(t_room *head, int index)
 {
 	t_room *tmp;
+	int 	i;
 
-	if (!link)
+	i = 0;
+	if (!head)
 		return (NULL);
 	tmp = head;
 	while (tmp)
 	{
-		if (!ft_strcmp(tmp->label, link))
+		if (i == index)
+			return (tmp);
+		tmp = tmp->next;
+		i++;
+	}
+	return (NULL);
+}
+
+t_room	*ft_search_room(t_room *head, char *tube)
+{
+	t_room *tmp;
+
+	if (!tube)
+		return (NULL);
+	tmp = head;
+	while (tmp)
+	{
+		// ft_printf("%s == %s\n", tmp->label, tube);
+		if (!ft_strcmp(tmp->label, tube))
 			return (tmp);
 		tmp = tmp->next;
 	}
 	return (NULL);
 }
 
-void	add_room(t_room **head, t_room *room)
+void	ft_print_rooms(t_room *head)
+{
+	t_room *tmp;
+
+	if (!head)
+		return ;
+	tmp = head;
+	ft_printf("rooms :");
+	while (tmp)
+	{
+		ft_printf(" %s ", tmp->label);
+		tmp = tmp->next;
+	}
+	ft_printf("\n");
+}
+
+void	ft_add_room(t_room **head, t_room *room)
 {
 	t_room *tmp;
 
@@ -37,7 +78,18 @@ void	add_room(t_room **head, t_room *room)
 	}
 }
 
-t_room	*duplicate_room(t_room *room)
+void 	ft_del_room(t_room *room)
+{
+	if (room)
+	{
+		if (room->label)
+			free(room->label);
+		ft_del_room(room->next);
+		free(room);
+	}
+}
+
+t_room	*ft_duplicate_room(t_room *room)
 {
 	t_room *new_room;
 
@@ -65,11 +117,10 @@ void	ft_tab_del(int **tab, int size)
 
 	i = -1;
 	while (++i < size)
-		free(tab[i]);
-	free(tab);
+        free(tab[i]);
 }
 
-t_room	*create_room(char **split)
+t_room	*ft_create_room(char **split)
 {
 	t_room *new_room;
 

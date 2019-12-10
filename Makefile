@@ -35,12 +35,14 @@ SRC_NAME = ft_lem_in.c \
 			ft_exit.c \
 			ft_options.c \
 			ft_room.c \
+			ft_tube.c \
 			ft_parser.c \
 			ft_parse_objects.c \
 			ft_solve.c \
 			ft_paths.c \
 			ft_print.c \
 			ft_ant.c \
+			ft_queue.c \
 			ft_matrix.c
 			
 OBJ_NAME = $(SRC_NAME:.c=.o)
