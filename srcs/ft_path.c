@@ -89,7 +89,7 @@ void ft_print_paths(t_env e)
     {
         path = e.path[i];
         // ft_printf("path[%s] : ", ft_get_room(e.rooms, i)->label);
-        ft_printf("path[%s] : ", ft_get_room(e.rooms, i)->label);
+        ft_printf("path[%d] : ", i);
         while (path != NULL)
         {
             ft_printf(" %s_%ld", ft_get_room(e.rooms, path->n)->label, path->dist);
@@ -97,4 +97,20 @@ void ft_print_paths(t_env e)
         }
         ft_printf("|\n");
     }
+}
+
+t_path *ft_path_del_n(t_path *s, int n)
+{
+    t_path *tmp;
+
+    if (s == NULL)
+        ft_error("Error : trying to remove tube that didnt existed\n");
+    if (s->n == n)
+    {
+        tmp = s->next;
+        free(s);
+        return tmp;
+    }
+    s->next = ft_path_del_n(s->next, n);
+    return (s);
 }

@@ -177,11 +177,12 @@ void    ft_print_paths(t_env e);
 void    ft_del_path(t_path *path);
 t_path  *ft_create_path(int n);
 void    dijkstra(t_env *e);
+t_path *ft_path_del_n(t_path *s, int n);
 
-/*
+    /*
 ** Print
 */
-void ft_print_ants(int nb_ants, t_paths *path, t_matrix *mat);
+    void ft_print_ants(int nb_ants, t_paths *path, t_matrix *mat);
 t_ant   ft_place_ant(t_paths *paths, int path_cursor, int *delays, int **rooms, char **labels);
 
 #endif

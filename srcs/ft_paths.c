@@ -117,7 +117,7 @@ void ft_paths_reverse(t_paths **s)
         current->next = prev; 
         prev = current; 
         current = next; 
-    } 
+    }
     *s = prev;
 }
 

@@ -12,6 +12,8 @@ void    ft_init_env(t_env *e)
     e->nb_ants = 0;
     e->queue = NULL;
     e->results = NULL;
+    e->res = NULL;
+    e->dist = NULL;
 }
 
 int main(int ac, char **av)
@@ -36,30 +38,37 @@ int main(int ac, char **av)
     ft_printf("paths parsed\n");
     ft_print_paths(e);
     ft_printf("Prbm at dijk ?\n");
-    dijkstra(&e);
-    
-    int i = -1;
+    while (e.res == NULL || e.res[e.end_room] != -1)
+    {
+        dijkstra(&e);
+        if (e.res[e.end_room] == -1)
+            break;
+        // Printing res and dist
+        int i = -1;
 
-    while (++i < e.cnt_room)
-    {
-        ft_printf("res[%s] = %s , dist = %ld\n", ft_get_room(e.rooms, i)->label,
-            ft_get_room(e.rooms, e.res[i])->label, e.dist[i]);
-        // ft_printf("res[%d] = %d , dist = %ld\n", i, e.res[i], e.dist[i]);
+        while (++i < e.cnt_room)
+        {
+            // ft_printf("res[%s] = %s , dist = %ld\n", ft_get_room(e->rooms, i)->label,
+            //     ft_get_room(e->rooms, e->res[i])->label, e->dist[i]);
+            ft_printf("res[%d] = %d , dist = %ld\n", i, e.res[i], e.dist[i]);
+        }
+
+        // Printing found path
+        ft_printf("results dist = %ld\npath | ", e.results->dist);
+        t_stack *s;
+        s = e.results->s;
+        ft_printf("results[%d] : dist = %ld | ", 0, e.results->dist);
+        while (s != NULL)
+        {
+            ft_printf("%s ", ft_get_room(e.rooms, s->data)->label, e.results->dist);
+            // ft_printf("%d ", s->data, e.results->dist);
+            s = s->next;
+        }
+        ft_printf("|\nLooping\n");
     }
-    ft_printf("results dist = %ld\npath | ", e.results->dist);
-    t_stack *s;
-    s = e.results->s;
-    ft_printf("results[%d] : dist = %ld | ", 0, e.results->dist);
-    while (s != NULL)
-    {
-        ft_printf("%s ", ft_get_room(e.rooms, s->data)->label, e.results->dist);
-        s = s->next;
-    }
-    ft_printf("|\n");
-    // long l = -1;
-    // while (++i < e.results->dist)
-    //     ft_printf(" %s ", ft_get_room(e.rooms, ft_stack_getn(e.results->s, l))->label);
-    // ft_print_ants(e.nb_ants, lst, e.mat);
+    free(e.res);
+    free(e.dist);
+    free(e.queue);
     ft_free_env(&e, 0);
     return (0);
 }
