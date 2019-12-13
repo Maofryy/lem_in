@@ -50,7 +50,7 @@ t_stack    *ft_ucs(int start, int end, t_matrix *mat)
         {
             // le 1er trouve sera forcement le plus court vu qu'on cherche par "paliers"
 
-            // ft_printf("open size = %d\n", ft_list_size(open));
+            ft_printf("testing v = %d at u = %d\n", u->data, v);
             // ft_printf("closed size = %d\n", ft_stack_size(closed));
             if (v == end)
             {

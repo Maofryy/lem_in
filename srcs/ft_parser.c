@@ -11,8 +11,12 @@ t_parser    *ft_init_parser(void)
     p->start_flag = 0;
     p->end_flag = 0;
     // p->rooms = (t_room *)malloc(sizeof(t_room));
+    
+    // p->rooms->next = NULL;
     p->rooms = NULL;
     // p->tubes = (t_tube *)malloc(sizeof(t_tube));
+    
+    // p->tubes->next = NULL;
     p->tubes = NULL;
     // p->rooms->next = NULL;
     return (p);
@@ -20,23 +24,23 @@ t_parser    *ft_init_parser(void)
 
 void    ft_free_parser(t_parser *p)
 {
-    if (p->start_flag)
-        free(p->start_room);
-    if (p->end_flag)
-        free(p->end_room);
+    // if (p->start_flag)
+    //     free(p->start_room);
+    // if (p->end_flag)
+    //     free(p->end_room);
     // while (p->rooms != NULL)
     // {
     //     free(p->rooms->label);
     //     p->rooms = p->rooms->next;
     // };
-    ft_del_room(p->rooms);
+    // ft_del_room(p->rooms);
     // while (p->tubes != NULL)
     // {
     //     free(p->tubes->room_1);
     //     free(p->tubes->room_2);
     //     p->tubes = p->tubes->next;
     // }
-    ft_del_tube(p->tubes);
+    // ft_del_tube(p->tubes);
     free(p);
 }
 
@@ -105,13 +109,15 @@ int     ft_parse_line(char *line, t_parser *p)
 void    ft_paste_parser(t_parser *p, t_env *e)
 {
     e->nb_ants = p->nb_ants;
-    ft_printf("nb ants : %d\n",e->nb_ants);
     if (p->start_flag != 1 || p->end_flag != 1)
         ft_error("Error : start or end not defined\n");
-    ft_print_rooms(p->rooms);
-    ft_print_tubes(p->tubes);
+    e->rooms = p->rooms;
+    e->cnt_room = p->cnt_room;
+    e->start_room = p->start_room;
+    e->end_room = p->end_room;
+    e->tubes = p->tubes;
     ft_printf("also print comments :/\n");
-    e->mat = ft_matrix_create(p);
+    // e->mat = ft_matrix_create(p);
 }
 
 int     ft_parse_stdin(t_env *e)
@@ -139,6 +145,6 @@ int     ft_parse_stdin(t_env *e)
         free(line);
     }
     ft_paste_parser(p, e);
-    ft_free_parser(p);
+    free(p);
     return (n);
 }

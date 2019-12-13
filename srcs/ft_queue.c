@@ -9,13 +9,13 @@ void queue_pop(t_path **head)
     *head = tmp;
 }
 
-void queue_push(t_path **head, int n, int d)
+void queue_push(t_path **head, int n, long d)
 {
     t_path *path;
     t_path *tmp;
 
     path = ft_memalloc(sizeof(t_path));
-    path->u = n;
+    path->n = n;
     path->dist = d;
     tmp = *head;
     if (!tmp)

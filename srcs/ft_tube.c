@@ -26,7 +26,6 @@ void	ft_add_tube(t_tube **head, t_tube *tube)
 	tmp = *head;
 	if (!tmp)
 	{
-		ft_printf("Head is indeed empty\n");
 		*head  = tube;
 	}
 	else
@@ -47,10 +46,6 @@ void ft_del_tube(t_tube *tube)
 {
 	if (tube)
 	{
-		if (tube->room_1)
-			free(tube->room_1);
-		if (tube->room_2)
-			free(tube->room_2);
 		ft_del_tube(tube->next);
 		free(tube);
 	}
@@ -66,22 +61,27 @@ void ft_print_tubes(t_tube *head)
 	ft_printf("tubes :");
 	while (tmp)
 	{
-		ft_printf(" %s-%s ", tmp->room_1, tmp->room_2);
+		ft_printf(" %d-%d ", tmp->room_1, tmp->room_2);
 		tmp = tmp->next;
 	}
 	ft_printf("\n");
 }
 
-t_tube	*ft_create_tube(char **split)
+t_tube	*ft_create_tube(t_parser *p, char **split)
 {
-	t_tube *net_tube;
+	t_tube *new_tube;
+	t_room *room_1;
+	t_room *room_2;
 
-	net_tube = ft_memalloc(sizeof(t_tube));
-	// net_tube->n = ++e->cnt;
-	net_tube->room_1 = ft_strdup(split[0]);
-	net_tube->room_2 = ft_strdup(split[1]);
+	room_1 = ft_search_room(p->rooms, split[0]);
+	room_2 = ft_search_room(p->rooms, split[1]);
+	new_tube = ft_memalloc(sizeof(t_tube));
+	new_tube->n = p->cnt_tube;
+	new_tube->room_1 = room_1->n;
+	new_tube->room_2 = room_2->n;
+	new_tube->next = NULL;
 	ft_split_del(split);
-	return (net_tube);
+	return (new_tube);
 }
 
 t_tube	*ft_duplicate_tube(t_tube *tube)
@@ -89,9 +89,8 @@ t_tube	*ft_duplicate_tube(t_tube *tube)
 	t_tube *net_tube;
 
 	net_tube = (t_tube*)malloc(sizeof(t_tube));
-	// net_tube->n t_tube->n;
 	net_tube->n = tube->n;
-	net_tube->room_1 = ft_strdup(tube->room_1);
-    net_tube->room_2 = ft_strdup(tube->room_2);
+	net_tube->room_1 = tube->room_1;
+    net_tube->room_2 = tube->room_2;
 	return (net_tube);
 }

@@ -51,12 +51,25 @@ void	ft_print_usage(int flag)
 
 }
 
+void ft_free_paths(t_path **paths, int cnt_room)
+{
+	int i;
+
+	i = -1;
+	while (++i < cnt_room)
+		ft_del_path(paths[i]);
+	free(paths);
+}
+
 void ft_free_env(t_env *e, int flag)
 {
 	if (e->i_flag)
 		free(e->i_filename);
 	if (e->o_flag)
 		free(e->o_filename);
-	ft_free_matrix(e->mat);
+	// ft_free_matrix(e->mat);
+	// ft_free_paths(e->paths, e->cnt_room);
+	ft_del_room(e->rooms);
+	ft_del_tube(e->tubes);
 	ft_exit(flag);
 }

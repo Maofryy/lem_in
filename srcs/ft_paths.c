@@ -1,11 +1,12 @@
 #include "lem_in.h"
 
-t_paths *ft_paths_new(t_stack *new)
+t_paths *ft_paths_new(t_stack *new, long dist)
 {
 	t_paths *new_st;
 
 	new_st = (t_paths *)malloc(sizeof(t_paths) * 1);
 	new_st->s = new;
+	new_st->dist = dist;
 	new_st->next = NULL;
 	return (new_st);
 }
@@ -24,13 +25,13 @@ t_stack	*ft_paths_pop(t_paths **s)
 	return (ret);
 }
 
-void    ft_paths_push_tail(t_paths **s, t_stack *new)
+void    ft_paths_push_tail(t_paths **s, t_stack *new, long dist)
 {
     t_paths *push;
 	t_paths *t;
 
 	t = *s;
-	push = ft_paths_new(new);
+	push = ft_paths_new(new, dist);
 	if (t == NULL)
 		*s = push;
 	else
@@ -58,12 +59,14 @@ int	ft_paths_contains(t_paths *s, int n)
 	return (0);
 }
 
-void	ft_paths_push(t_paths **s, t_stack *new_s)
+void	ft_paths_push(t_paths **s, t_stack *new_s, long dist)
 {
 	t_paths *new;
 
-	new = ft_paths_new(new_s);
-    if (s != NULL && new != NULL)
+	new = ft_paths_new(new_s, dist);
+	if (s == NULL)
+		*s = new;
+    else if (new != NULL)
 	{
 		new->next = *s;
 		*s = new;
@@ -94,6 +97,7 @@ void	ft_paths_print(t_paths *s, char **labels)
 	t = s;
 	while (t != NULL)
 	{
+		ft_printf("dist = %ld | ", t->dist);
 		ft_stack_print_labels(t->s, labels);
 		t = t->next;
 	}
