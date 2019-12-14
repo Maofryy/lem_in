@@ -16,7 +16,7 @@ void init_dijkstra(t_env *e)
         e->res[i] = -1;
     e->res[e->start_room] = 0;
     e->dist[e->start_room] = 0;
-    queue_push(&e->queue, e->start_room, 0);
+    path_queue_push(&e->queue, e->start_room, 0);
 }
 
 void ft_parse_stack(t_env *e)
@@ -74,7 +74,7 @@ void dijkstra(t_env *e)
         itmp = e->queue->n;
         dtmp = e->queue->dist;
         ptmp = e->path[itmp];
-        queue_pop(&e->queue);
+        path_queue_pop(&e->queue);
         if (dtmp <= e->dist[itmp])
         {
             while (ptmp)
@@ -82,7 +82,7 @@ void dijkstra(t_env *e)
                 if (e->dist[ptmp->n] > e->dist[itmp] + ptmp->dist)
                 {
                     e->dist[ptmp->n] = e->dist[itmp] + ptmp->dist;
-                    queue_push(&e->queue, ptmp->n, e->dist[ptmp->n]);
+                    path_queue_push(&e->queue, ptmp->n, e->dist[ptmp->n]);
                     e->res[ptmp->n] = itmp;
                 }
                 ptmp = ptmp->next;

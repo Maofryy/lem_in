@@ -47,8 +47,7 @@ typedef struct      s_tube
 typedef struct      s_ant
 {
     int nb;
-    int *rooms;
-    int length;
+    int room;
     int delay;
 }                   t_ant;
 
@@ -131,13 +130,16 @@ int     ft_parse_tube(char *line, t_parser *p);
 ** Solve
 */
 t_paths *ft_solve(t_matrix *mat);
-void    queue_push(t_path **head, int n, long d);
-void    queue_pop(t_path **head);
+void    path_queue_push(t_path **head, int n, long d);
+void    path_queue_pop(t_path **head);
+void    stack_queue_pop(t_stack **head);
+void    stack_queue_push(t_stack **head, int n);
+int     stack_queue_look(t_stack *head, int index);
 
 /*
 ** Matrix
 */
-t_matrix    *ft_matrix_create(t_parser *p);
+t_matrix *ft_matrix_create(t_parser *p);
 void        ft_free_matrix(t_matrix *mat);
 void        ft_print_matrix(t_matrix mat);
 void        ft_matrix_remove_path(t_stack *s, t_matrix *mat);
@@ -168,6 +170,7 @@ t_stack *ft_get_stack(t_paths *paths, int n);
 void	ft_paths_print(t_paths *s, char **labels);
 void    ft_paths_reverse(t_paths **s);
 void	ft_paths_del(t_paths **s);
+t_stack *ft_paths_get(t_paths *s, int index);
 
 /*
 ** For single Path
@@ -179,10 +182,11 @@ t_path  *ft_create_path(int n);
 void    dijkstra(t_env *e);
 t_path *ft_path_del_n(t_path *s, int n);
 
-    /*
+/*
 ** Print
 */
-    void ft_print_ants(int nb_ants, t_paths *path, t_matrix *mat);
-t_ant   ft_place_ant(t_paths *paths, int path_cursor, int *delays, int **rooms, char **labels);
+void ft_print_ants(int nb_ants, t_paths *path, t_matrix *mat);
+void   ft_place_ant(t_paths *paths, int path_cursor, t_stack **queues, int n);
+void    ft_move_ants(t_env *e);
 
 #endif

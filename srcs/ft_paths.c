@@ -137,3 +137,17 @@ void	ft_paths_del(t_paths **s)
 	ft_stack_del(&(*s)->s);
 	free(*s);
 }
+
+t_stack *ft_paths_get(t_paths *s, int index)
+{
+	t_paths *t;
+	int i;
+
+	t = s;
+	if (!t)
+		return (NULL);
+	i = -1;
+	while (t->next && ++i < index)
+		t = t->next;
+	return (t->s);
+}
