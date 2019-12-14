@@ -30,13 +30,13 @@ int main(int ac, char **av)
     ft_init_env(&e);
     ft_parse_stdin(&e);
     // ft_printf("tube : %p\n", e.tubes);
-    ft_print_rooms(e.rooms);
-    ft_print_tubes(e.tubes);
+    // ft_print_rooms(e.rooms);
+    // ft_print_tubes(e.tubes);
     ft_printf("Parsing finished\n\n");
     // lst = ft_solve(e.mat);
     ft_parse_path(&e);
     ft_printf("paths parsed\n");
-    ft_print_paths(e);
+    // ft_print_paths(e);
     ft_printf("Prbm at dijk ?\n");
     while (e.res == NULL || e.res[e.end_room] != -1)
     {
@@ -44,20 +44,20 @@ int main(int ac, char **av)
         if (e.res[e.end_room] == -1)
             break;
         // Printing res and dist
-        int i = -1;
+        // int i = -1;
 
-        while (++i < e.cnt_room)
-        {
-            // ft_printf("res[%s] = %s , dist = %ld\n", ft_get_room(e->rooms, i)->label,
-            //     ft_get_room(e->rooms, e->res[i])->label, e->dist[i]);
-            ft_printf("res[%d] = %d , dist = %ld\n", i, e.res[i], e.dist[i]);
-        }
+        // while (++i < e.cnt_room)
+        // {
+        //     // ft_printf("res[%s] = %s , dist = %ld\n", ft_get_room(e->rooms, i)->label,
+        //     //     ft_get_room(e->rooms, e->res[i])->label, e->dist[i]);
+        //     ft_printf("res[%d] = %d , dist = %ld\n", i, e.res[i], e.dist[i]);
+        // }
 
         // Printing found path
         ft_printf("results dist = %ld\npath | ", e.results->dist);
         t_stack *s;
         s = e.results->s;
-        ft_printf("results[%d] : dist = %ld | ", 0, e.results->dist);
+        // ft_printf("results[%d] : dist = %ld | ", 0, e.results->dist);
         while (s != NULL)
         {
             ft_printf("%s ", ft_get_room(e.rooms, s->data)->label, e.results->dist);

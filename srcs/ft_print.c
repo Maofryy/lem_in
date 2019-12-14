@@ -51,7 +51,7 @@ int       **ft_init_rooms(int nb_ants, int **rooms)
     return (rooms);
 }
 
-int     ft_print_single_ant(t_ant ant, int line, char **labels)
+int     ft_print_single_ant(t_ant ant, int line)
 {
     if (line >= ant.delay && line < ant.delay + ant.length - 1)
         ft_printf("L%d-%s ", ant.nb, labels[ant.rooms[line - ant.delay + 1]]);
@@ -60,7 +60,7 @@ int     ft_print_single_ant(t_ant ant, int line, char **labels)
     return (0);
 }
 
-void    ft_print_ants(int nb_ants, t_paths *paths, t_matrix *mat)
+void    ft_print_ants(int nb_ants, t_paths *paths)
 {
     t_ant   *ants;
     int     i;
@@ -81,7 +81,7 @@ void    ft_print_ants(int nb_ants, t_paths *paths, t_matrix *mat)
     ft_init_rooms(nb_ants, rooms);
     while (++i < nb_ants)
     {
-        ants[i] = ft_place_ant(paths, path_cursor, delays, rooms, mat->labels);
+        ants[i] = ft_place_ant(paths, path_cursor, delays, rooms);
         ants[i].nb = i + 1;
     }
     while (1)
@@ -89,7 +89,7 @@ void    ft_print_ants(int nb_ants, t_paths *paths, t_matrix *mat)
         ended = 0;
         i = -1;
         while (++i < nb_ants)
-            ended += ft_print_single_ant(ants[i], line, mat->labels);
+            ended += ft_print_single_ant(ants[i], line);
         if (ended == nb_ants)
             break;
         ft_putchar('\n');
