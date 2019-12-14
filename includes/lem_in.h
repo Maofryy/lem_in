@@ -185,7 +185,7 @@ t_path *ft_path_del_n(t_path *s, int n);
 /*
 ** Print
 */
-void ft_print_ants(int nb_ants, t_paths *path, t_matrix *mat);
+void    ft_print_ants(t_env *e, t_stack **queues, int res_size);
 void   ft_place_ant(t_paths *paths, int path_cursor, t_stack **queues, int n);
 void    ft_move_ants(t_env *e);
 

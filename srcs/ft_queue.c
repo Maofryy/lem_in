@@ -66,10 +66,13 @@ void stack_queue_push(t_stack **head, int n)
 int stack_queue_look(t_stack *head, int index)
 {
     int     res;
+    int     size;
     t_stack *tmp;
 
     tmp = head;
     res = 0;
+    size = ft_stack_size(tmp);
+    (void)size;
     if (!tmp)
         return (-1);
     else

@@ -18,7 +18,11 @@ void    ft_move_ants(t_env *e)
     int i = -1;
     while (++i < res_size)
         ft_stack_print(queues[i]);
-
+    ft_print_ants(e, queues, res_size);
+    i = -1;
+    while (++i < res_size)
+        ft_stack_del(&queues[i]);
+    free(queues);
     // change ant struct to adapt to the new results
     // re code what is actually in the ft_printc file
     // re code the ft_place_ant function accordingly
