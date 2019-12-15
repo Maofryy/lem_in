@@ -32,12 +32,12 @@ int main(int ac, char **av)
     // ft_printf("tube : %p\n", e.tubes);
     // ft_print_rooms(e.rooms);
     // ft_print_tubes(e.tubes);
-    ft_printf("Parsing finished\n\n");
+    // ft_printf("Parsing finished\n\n");
     // lst = ft_solve(e.mat);
     ft_parse_path(&e);
-    ft_printf("paths parsed\n");
+    // ft_printf("paths parsed\n");
     // ft_print_paths(e);
-    ft_printf("Prbm at dijk ?\n");
+    // ft_printf("Prbm at dijk ?\n");
     while (e.res == NULL || e.res[e.end_room] != -1)
     {
         dijkstra(&e);
@@ -56,25 +56,25 @@ int main(int ac, char **av)
         // Printing found path
 
     }
-    t_paths *tmp;
-    t_stack *s;
+    // t_paths *tmp;
+    // t_stack *s;
     ft_paths_reverse(&e.results);
-    tmp = e.results;
+    // tmp = e.results;
     
-    while (tmp)
-    {
-        ft_printf("results dist = %ld => path | ", tmp->dist);
-        s = tmp->s;
-        // ft_printf("results[%d] : dist = %ld | ", 0, e.results->dist);
-        while (s != NULL)
-        {
-            ft_printf("%s ", ft_get_room(e.rooms, s->data)->label);
-            // ft_printf("%d ", s->data, e.results->dist);
-            s = s->next;
-        }
-        ft_printf("|\n");
-        tmp = tmp->next;
-    }
+    // while (tmp)
+    // {
+    //     ft_printf("results dist = %ld => path | ", tmp->dist);
+    //     s = tmp->s;
+    //     // ft_printf("results[%d] : dist = %ld | ", 0, e.results->dist);
+    //     while (s != NULL)
+    //     {
+    //         ft_printf("%s ", ft_get_room(e.rooms, s->data)->label);
+    //         // ft_printf("%d ", s->data, e.results->dist);
+    //         s = s->next;
+    //     }
+    //     ft_printf("|\n");
+    //     tmp = tmp->next;
+    // }
     ft_move_ants(&e);
     free(e.res);
     free(e.dist);

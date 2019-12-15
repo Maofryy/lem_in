@@ -22,23 +22,34 @@ void ft_print_ants(t_env *e, t_stack **queues, int res_size)
     int l;
     int i;
     int j;
+    int ret;
     int flag;
+    t_stack *path;
 
     l = 1;
-    flag = 4;
+    flag = 1;
     (void)e;
+    ft_putchar('\n');
     while (flag)
     {
         i = -1;
         while (++i < res_size)
         {
             j = -1;
-            ft_printf("\nqueue %d = ", i);
+            // ft_printf("\nqueue %d = ", i);
             while (++j < l)
-                ft_printf(" %d ", stack_queue_look(queues[i], j));
+            {
+                ret = stack_queue_look(queues[i], j);
+                path = ft_paths_get(e->results, i);
+                if (ret == e->nb_ants && (l - j == ft_stack_size(path) - 1))
+                    flag = 0;
+                if (ret == -1 || (l - j >= ft_stack_size(path)))
+                    continue;
+                ft_printf("L%d-%s ", ret, ft_get_room(e->rooms, ft_stack_getn(path, l - j))->label);
+            }
         }
         l++;
-        ft_printf("\nNew line");
-        flag--;
+        ft_putchar('\n');
+        // ft_printf("\nNew line");
     }
 }

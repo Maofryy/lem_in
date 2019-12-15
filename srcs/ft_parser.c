@@ -116,7 +116,7 @@ void    ft_paste_parser(t_parser *p, t_env *e)
     e->start_room = p->start_room;
     e->end_room = p->end_room;
     e->tubes = p->tubes;
-    ft_printf("also print comments :/\n");
+    // ft_printf("also print comments :/\n");
     // e->mat = ft_matrix_create(p);
 }
 
