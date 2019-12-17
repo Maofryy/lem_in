@@ -29,10 +29,16 @@ int    ft_parse_tube(char *line, t_parser *p)
     char **tab;
 
     if (count_words(line, '-') != 2)
-        ft_error("Error : Not well formated tube line\n");
+    {
+        ft_printf("Error : Not well formated tube line\n");
+        return (-1);
+    }
     tab = ft_strsplit(line, '-');
-    if ((ft_get_room(p->rooms, ft_atoi(tab[0])) == NULL) || (ft_get_room(p->rooms, ft_atoi(tab[1])) == NULL) || ft_strequ(tab[0], tab[1]))
-        ft_error("Error : Wrong room label\n");
+    if ((ft_search_room(p->rooms, tab[0]) == NULL) || (ft_search_room(p->rooms, tab[1]) == NULL) || ft_strequ(tab[0], tab[1]))
+    {
+        ft_printf("Error : Wrong room label\n");
+        return (-1);
+    }
     ft_add_tube(&p->tubes, ft_create_tube(p, tab));
     // p->tubes[p->cnt_tube].room_1 = ft_strdup(tab[0]);
     // p->tubes[p->cnt_tube].room_2 = ft_strdup(tab[1]);
@@ -46,12 +52,16 @@ int    ft_parse_room(char *line, t_parser *p)
     char **tab;
 
     if (count_words(line, ' ') != 3)
-        ft_error("Error : Not well formated room line\n");
-    //ptet free aussi quoi
+    {
+        ft_printf("Error : Not well formated room line\n");
+        return (-1);
+    }
     tab = ft_strsplit(line, ' ');
     if (!ft_isnum(tab[1]) || !ft_isnum(tab[2]))
-        ft_error("Error : Not well room line\n");
-    //ptet free aussi quoi
+    {
+        ft_printf("Error : Not well room formated line\n");
+        return (-1);
+    }
     if (p->start_flag == -1)
     {
         p->start_room = p->cnt_room;
@@ -60,18 +70,14 @@ int    ft_parse_room(char *line, t_parser *p)
     if (p->end_flag == -1)
     {
         if (p->start_flag == -1)
-            ft_error("Error : start and end cannot be the same room\n");
+        {
+            ft_printf("Error : start and end cannot be the same room\n");
+            return (-1);
+        }
         p->end_room = p->cnt_room;
         p->end_flag = 1;
     }
     ft_add_room(&p->rooms, ft_create_room(p, tab));
-    /*
-    p->rooms[p->cursor_rooms].label = ft_strdup(tab[0]);
-    p->rooms[p->cursor_rooms].x_pos = ft_atoi(tab[1]);
-    p->rooms[p->cursor_rooms].y_pos = ft_atoi(tab[2]);
-    */
-
-    // ft_printf("Room %s at (%d, %d)\n", p->rooms[p->cursor_rooms].label, p->rooms[p->cursor_rooms].x_pos, p->rooms[p->cursor_rooms].y_pos);
     p->cnt_room++;
     return (1);
 }

@@ -58,28 +58,13 @@ int main(int ac, char **av)
     }
     // t_paths *tmp;
     // t_stack *s;
-    ft_paths_reverse(&e.results);
-    // tmp = e.results;
-    
-    // while (tmp)
-    // {
-    //     ft_printf("results dist = %ld => path | ", tmp->dist);
-    //     s = tmp->s;
-    //     // ft_printf("results[%d] : dist = %ld | ", 0, e.results->dist);
-    //     while (s != NULL)
-    //     {
-    //         ft_printf("%s ", ft_get_room(e.rooms, s->data)->label);
-    //         // ft_printf("%d ", s->data, e.results->dist);
-    //         s = s->next;
-    //     }
-    //     ft_printf("|\n");
-    //     tmp = tmp->next;
-    // }
-    ft_move_ants(&e);
-    free(e.res);
-    free(e.dist);
-    free(e.queue);
-    ft_paths_del(&e.results);
+    if (ft_paths_size(e.results) == 0)
+        ft_printf("Error : no path found\n");
+    else
+    {
+        ft_paths_reverse(&e.results);
+        ft_move_ants(&e);
+    }
     ft_free_env(&e, 0);
     return (0);
 }

@@ -47,20 +47,32 @@ void    ft_free_parser(t_parser *p)
 int    ft_parse_long(char *line, long *nb)
 {
     if (!ft_isnum(line))
-        ft_error("Error : non numeric number passed");
+    {
+        ft_printf("Error : non numeric number passed");
+        return (-1);
+    }
     *nb = ft_atol(line);
     if (*nb < 0)
-        ft_error("Error : negative number");
+    {    
+        ft_printf("Error : negative number");
+        return (-1);
+    }
     return (1);
 }
 
 int    ft_parse_int(char *line, int *nb)
 {
     if (!ft_isnum(line))
-        ft_error("Error : non numeric number passed");
+    {
+        ft_printf("Error : non numeric number passed");
+        return (-1);
+    }
     *nb = ft_atoi(line);
     if (*nb < 0)
-        ft_error("Error : negative number");
+    {    
+        ft_printf("Error : negative number");
+        return (-1);
+    }
     return (1);
 }
 
@@ -69,13 +81,19 @@ int    ft_read_comment(char *line, t_parser *p)
     if (ft_strequ(line, "#start"))
     {
         if (p->start_flag == 1)
-            ft_error("Error : Double start command");
+        {
+            ft_printf("Error : Double start command");
+            return (-1);
+        }
         p->start_flag = -1;
     }
     else if (ft_strequ(line, "#end"))
     {
         if (p->end_flag == 1)
-            ft_error("Error : Double end command");
+        {
+            ft_printf("Error : Double end command");
+            return (-1);
+        }
         p->end_flag = -1;
     }
     return (1);
@@ -99,10 +117,7 @@ int     ft_parse_line(char *line, t_parser *p)
     else if (ft_strchr(line, '-'))
         return (ft_parse_tube(line, p));
     else
-    {
-        free(line);
-        ft_error("Error : not correct line\n");
-    }
+        ret = -1;
     return (ret);
 }
 
@@ -110,14 +125,17 @@ void    ft_paste_parser(t_parser *p, t_env *e)
 {
     e->nb_ants = p->nb_ants;
     if (p->start_flag != 1 || p->end_flag != 1)
-        ft_error("Error : start or end not defined\n");
+        ft_error("Error : start or end not defined");
+    if (p->rooms == NULL)
+        ft_error("Error : no rooms given\n");
     e->rooms = p->rooms;
     e->cnt_room = p->cnt_room;
     e->start_room = p->start_room;
     e->end_room = p->end_room;
+    if (p->tubes == NULL)
+        ft_error("Error : no tubes given\n");
     e->tubes = p->tubes;
     // ft_printf("also print comments :/\n");
-    // e->mat = ft_matrix_create(p);
 }
 
 int     ft_parse_stdin(t_env *e)
@@ -131,15 +149,10 @@ int     ft_parse_stdin(t_env *e)
     while (get_next_line(e->o_fd, &line) > 0)
     {
         ft_printf("%s\n", line);
-        if (ft_strlen(line) == 0 || line[0] == 'L')
+        if (ft_strlen(line) == 0 || line[0] == 'L' || ft_parse_line(line, p) == -1)
         {
             free(line);
             break ;
-        }
-        if (ft_parse_line(line, p) == -1)
-        {
-            free(line);
-            ft_free_env(e, 1);
         }
         n++;
         free(line);

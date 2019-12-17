@@ -71,5 +71,9 @@ void ft_free_env(t_env *e, int flag)
 	// ft_free_paths(e->paths, e->cnt_room);
 	ft_del_room(e->rooms);
 	ft_del_tube(e->tubes);
+	free(e->res);
+	free(e->dist);
+	free(e->queue);
+	ft_paths_del(&e->results);
 	ft_exit(flag);
 }
